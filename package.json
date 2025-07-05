@@ -1,0 +1,29 @@
+{
+  "name": "soundboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && cp -r public/* docs/",
+    "watch": "tsc --watch",
+    "clean": "rm -rf docs",
+    "start": "serve docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olliee2/soundboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/olliee2/soundboard/issues"
+  },
+  "homepage": "https://github.com/olliee2/soundboard#readme",
+  "devDependencies": {
+    "serve": "^14.2.4",
+    "typescript": "^5.8.3"
+  }
+}
