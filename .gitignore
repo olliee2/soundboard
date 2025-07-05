@@ -5,4 +5,4 @@ dist/
 .idea/
 .env
 *.log
-
+PLAN.md
