@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "module": "es6",
+    "target": "es2017",
+    "module": "esnext",
     "rootDir": "src",
     "outDir": "docs",
     "esModuleInterop": true,
