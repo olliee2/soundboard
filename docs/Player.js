@@ -13,6 +13,9 @@ export default class Player {
         this.audio.addEventListener('ended', () => {
             this.handleSongEnd();
         });
+        this.previousButton.addEventListener('click', () => {
+            this.previousSong();
+        });
         this.playButton.addEventListener('click', () => {
             if (this.audio.paused) {
                 this.play();
@@ -20,6 +23,9 @@ export default class Player {
             else {
                 this.pause();
             }
+        });
+        this.nextButton.addEventListener('click', () => {
+            this.nextSong();
         });
     }
     play() {
@@ -46,8 +52,20 @@ export default class Player {
         this.audio.src = song.url;
         this.play();
         this.songTitle.textContent = song.name;
-        this.seekBar.max = Math.floor(song.duration).toString();
+        this.seekBar.max = Math.max(1, Math.floor(song.duration)).toString();
         this.songTotalTime.textContent = this.durationToString(song.duration);
+    }
+    previousSong() {
+        if (this.queuePointer > 0) {
+            this.queuePointer--;
+        }
+        this.playSong();
+    }
+    nextSong() {
+        if (this.queuePointer + 1 < this.queue.length) {
+            this.queuePointer++;
+        }
+        this.playSong();
     }
     handleSongEnd() {
         this.playButton.textContent = 'Play';
@@ -63,7 +81,12 @@ export default class Player {
     }
     render() {
         this.songCurrentTime.textContent = this.durationToString(this.audio.currentTime);
-        this.seekBar.value = Math.floor(this.audio.currentTime).toString();
+        if (this.audio.ended) {
+            this.seekBar.value = this.seekBar.max;
+        }
+        else {
+            this.seekBar.value = Math.floor(this.audio.currentTime).toString();
+        }
         requestAnimationFrame(() => {
             this.render();
         });
