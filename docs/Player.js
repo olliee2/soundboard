@@ -1,5 +1,5 @@
 export default class Player {
-    constructor(songTitle, previousButton, playButton, nextButton, songCurrentTime, seekBar, songTotalTime) {
+    constructor(songTitle, previousButton, playButton, nextButton, songCurrentTime, seekBar, songTotalTime, queueContainer) {
         this.songTitle = songTitle;
         this.previousButton = previousButton;
         this.playButton = playButton;
@@ -7,6 +7,7 @@ export default class Player {
         this.songCurrentTime = songCurrentTime;
         this.seekBar = seekBar;
         this.songTotalTime = songTotalTime;
+        this.queueContainer = queueContainer;
         this.audio = new Audio();
         this.queue = [];
         this.queuePointer = 0;

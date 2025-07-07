@@ -14,6 +14,7 @@ export default class Player {
     private songCurrentTime: HTMLTimeElement,
     private seekBar: HTMLInputElement,
     private songTotalTime: HTMLTimeElement,
+    private queueContainer: HTMLElement,
   ) {
     this.audio.addEventListener('ended', () => {
       this.handleSongEnd();
@@ -62,10 +63,12 @@ export default class Player {
     this.queue.push(song);
     this.queuePointer = this.queue.length - 1;
     this.playSong();
+    this.renderQueue();
   }
 
   enqueueSong(song: SongFile) {
     this.queue.push(song);
+    this.renderQueue();
     if (this.queue.length === this.queuePointer + 1) {
       this.playSong();
     }
@@ -83,6 +86,7 @@ export default class Player {
   previousSong() {
     if (this.queuePointer > 0) {
       this.queuePointer--;
+      this.renderQueue();
     }
     this.playSong();
   }
@@ -90,6 +94,7 @@ export default class Player {
   nextSong() {
     if (this.queuePointer + 1 < this.queue.length) {
       this.queuePointer++;
+      this.renderQueue();
     }
     this.playSong();
   }
@@ -97,6 +102,7 @@ export default class Player {
   handleSongEnd() {
     this.playButton.textContent = 'Play';
     this.queuePointer++;
+    this.renderQueue();
     if (this.queuePointer < this.queue.length) {
       this.playSong();
     }

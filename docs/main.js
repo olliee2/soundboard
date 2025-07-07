@@ -26,7 +26,8 @@ function loadApp(songJSON) {
     const songCurrentTime = document.getElementById('song-current-time');
     const seekBar = document.getElementById('seek-bar');
     const songTotalTime = document.getElementById('song-total-time');
-    const player = new Player(songTitle, previousButton, playButton, nextButton, songCurrentTime, seekBar, songTotalTime);
+    const queueContainer = document.getElementById('queue-container');
+    const player = new Player(songTitle, previousButton, playButton, nextButton, songCurrentTime, seekBar, songTotalTime, queueContainer);
     player.render();
     const songTree = document.getElementById('song-tree');
     const selector = new Selector(songTree, player, songJSON);
