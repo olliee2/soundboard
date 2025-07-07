@@ -6,12 +6,12 @@
   "scripts": {
     "build": "tsc && cp -r public/* docs/",
     "watch": "tsc --watch",
-    "clean": "rm -rf docs",
+    "clean": "rm -rf docs/*",
     "start": "serve docs",
     "lint": "eslint 'src/**/*.{ts,js}'",
     "format": "prettier --write 'src/**/*.{ts,js,css,html}' 'public/**/*.{css,html}'",
-    "copy:watch": "cp -r public/* docs/ && chokidar 'public/**/*.{html,css}' -c 'cp --parents {{path}} docs/'",
-    "dev": "npm-run-all --parallel watch copy:watch start"
+    "copy:watch": "cp -r public/* docs/ && chokidar 'public/**/*.{html,css}' -c 'cp -r public/* docs/'",
+    "dev": "npm run clean && npm-run-all --parallel watch copy:watch start"
   },
   "repository": {
     "type": "git",
