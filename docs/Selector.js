@@ -10,20 +10,31 @@ export default class Selector {
         const songs = songFolder.files.sort((a, b) => a.duration - b.duration);
         for (const song of songs) {
             const li = document.createElement('li');
-            const button = document.createElement('button');
+            const div = document.createElement('div');
+            div.className = 'song';
+            const span = document.createElement('span');
             const minutes = Math.floor(song.duration / 60);
             const seconds = song.duration % 60;
-            button.textContent = `${minutes ? minutes + 'm' : ''}${seconds}s ${song.name}`;
-            button.addEventListener('click', () => {
-                this.player.playNewSong(song);
+            span.textContent = `${minutes ? minutes + 'm' : ''}${seconds}s ${song.name}`;
+            const playButton = document.createElement('button');
+            playButton.textContent = 'Play';
+            playButton.addEventListener('click', () => {
+                this.player.playSongAndClearQueue(song);
             });
-            li.append(button);
+            const queueButton = document.createElement('button');
+            queueButton.textContent = 'Enqueue';
+            queueButton.addEventListener('click', () => {
+                this.player.enqueueSong(song);
+            });
+            div.append(span, playButton, queueButton);
+            li.append(div);
             ul.append(li);
         }
         const folders = songFolder.folders;
         for (const folder of folders) {
             const li = document.createElement('li');
             const span = document.createElement('span');
+            span.className = 'folder';
             span.textContent = folder.name;
             li.appendChild(span);
             li.append(this.renderFolder(folder));

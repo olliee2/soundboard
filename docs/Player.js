@@ -8,6 +8,7 @@ export default class Player {
         this.seekBar = seekBar;
         this.songTotalTime = songTotalTime;
         this.audio = new Audio();
+        this.queue = [];
         this.audio.addEventListener('ended', () => {
             this.handleSongEnd();
         });
@@ -28,7 +29,18 @@ export default class Player {
         this.audio.pause();
         this.playButton.textContent = 'Play';
     }
-    playNewSong(song) {
+    playSongAndClearQueue(song) {
+        this.playSong(song);
+    }
+    enqueueSong(song) {
+        if (this.audio.paused && this.queue.length === 0) {
+            this.playSong(song);
+        }
+        else {
+            this.queue.push(song);
+        }
+    }
+    playSong(song) {
         this.audio.src = song.url;
         this.play();
         this.songTitle.textContent = song.name;

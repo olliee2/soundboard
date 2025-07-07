@@ -2,6 +2,7 @@ import type { SongFile } from './types.js';
 
 export default class Player {
   private audio = new Audio();
+  private queue: SongFile[] = [];
 
   constructor(
     private songTitle: HTMLElement,
@@ -35,7 +36,19 @@ export default class Player {
     this.playButton.textContent = 'Play';
   }
 
-  playNewSong(song: SongFile) {
+  playSongAndClearQueue(song: SongFile) {
+    this.playSong(song);
+  }
+
+  enqueueSong(song: SongFile) {
+    if (this.audio.paused && this.queue.length === 0) {
+      this.playSong(song);
+    } else {
+      this.queue.push(song);
+    }
+  }
+
+  playSong(song: SongFile) {
     this.audio.src = song.url;
     this.play();
     this.songTitle.textContent = song.name;
