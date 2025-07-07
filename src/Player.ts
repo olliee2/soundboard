@@ -37,7 +37,7 @@ export default class Player {
     this.playButton.textContent = 'Play';
   }
 
-  playSongAndClearQueue(song: SongFile) {
+  playNewSong(song: SongFile) {
     this.queue.push(song);
     this.queuePointer = this.queue.length - 1;
     this.playSong();

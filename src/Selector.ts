@@ -26,7 +26,7 @@ export default class Selector {
       const playButton = document.createElement('button');
       playButton.textContent = 'Play';
       playButton.addEventListener('click', () => {
-        this.player.playSongAndClearQueue(song);
+        this.player.playNewSong(song);
       });
 
       const queueButton = document.createElement('button');
