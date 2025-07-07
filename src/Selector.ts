@@ -48,7 +48,7 @@ export default class Selector {
       const path = folder.name.split('/');
       button.textContent = path[path.length - 1];
       button.addEventListener('click', () => {
-        this.path = [...path];
+        this.path = this.path.slice(0, index).concat(folder.name);
         this.render();
       });
       li.appendChild(button);
