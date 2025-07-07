@@ -10,6 +10,7 @@ export default class Player {
         this.audio = new Audio();
         this.queue = [];
         this.queuePointer = 0;
+        this.isSeeking = false;
         this.audio.addEventListener('ended', () => {
             this.handleSongEnd();
         });
@@ -26,6 +27,14 @@ export default class Player {
         });
         this.nextButton.addEventListener('click', () => {
             this.nextSong();
+        });
+        this.seekBar.addEventListener('input', () => {
+            this.isSeeking = true;
+            this.songCurrentTime.textContent = this.durationToString(Number(this.seekBar.value));
+        });
+        this.seekBar.addEventListener('change', () => {
+            this.audio.currentTime = Number(this.seekBar.value);
+            this.isSeeking = false;
         });
     }
     play() {
@@ -80,12 +89,14 @@ export default class Player {
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     }
     render() {
-        this.songCurrentTime.textContent = this.durationToString(this.audio.currentTime);
-        if (this.audio.ended) {
-            this.seekBar.value = this.seekBar.max;
-        }
-        else {
-            this.seekBar.value = Math.floor(this.audio.currentTime).toString();
+        if (!this.isSeeking) {
+            this.songCurrentTime.textContent = this.durationToString(this.audio.currentTime);
+            if (this.audio.ended) {
+                this.seekBar.value = this.seekBar.max;
+            }
+            else {
+                this.seekBar.value = Math.floor(this.audio.currentTime).toString();
+            }
         }
         requestAnimationFrame(() => {
             this.render();

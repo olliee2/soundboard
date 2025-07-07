@@ -4,6 +4,7 @@ export default class Player {
   private audio = new Audio();
   private queue: SongFile[] = [];
   private queuePointer = 0;
+  private isSeeking = false;
 
   constructor(
     private songTitle: HTMLElement,
@@ -32,6 +33,18 @@ export default class Player {
 
     this.nextButton.addEventListener('click', () => {
       this.nextSong();
+    });
+
+    this.seekBar.addEventListener('input', () => {
+      this.isSeeking = true;
+      this.songCurrentTime.textContent = this.durationToString(
+        Number(this.seekBar.value),
+      );
+    });
+
+    this.seekBar.addEventListener('change', () => {
+      this.audio.currentTime = Number(this.seekBar.value);
+      this.isSeeking = false;
     });
   }
 
@@ -96,13 +109,15 @@ export default class Player {
   }
 
   render() {
-    this.songCurrentTime.textContent = this.durationToString(
-      this.audio.currentTime,
-    );
-    if (this.audio.ended) {
-      this.seekBar.value = this.seekBar.max;
-    } else {
-      this.seekBar.value = Math.floor(this.audio.currentTime).toString();
+    if (!this.isSeeking) {
+      this.songCurrentTime.textContent = this.durationToString(
+        this.audio.currentTime,
+      );
+      if (this.audio.ended) {
+        this.seekBar.value = this.seekBar.max;
+      } else {
+        this.seekBar.value = Math.floor(this.audio.currentTime).toString();
+      }
     }
     requestAnimationFrame(() => {
       this.render();
