@@ -9,6 +9,7 @@ export default class Player {
         this.songTotalTime = songTotalTime;
         this.audio = new Audio();
         this.queue = [];
+        this.queuePointer = 0;
         this.audio.addEventListener('ended', () => {
             this.handleSongEnd();
         });
@@ -30,17 +31,18 @@ export default class Player {
         this.playButton.textContent = 'Play';
     }
     playSongAndClearQueue(song) {
-        this.playSong(song);
+        this.queue.push(song);
+        this.queuePointer = this.queue.length - 1;
+        this.playSong();
     }
     enqueueSong(song) {
-        if (this.audio.paused && this.queue.length === 0) {
-            this.playSong(song);
-        }
-        else {
-            this.queue.push(song);
+        this.queue.push(song);
+        if (this.queue.length === this.queuePointer + 1) {
+            this.playSong();
         }
     }
-    playSong(song) {
+    playSong() {
+        const song = this.queue[this.queuePointer];
         this.audio.src = song.url;
         this.play();
         this.songTitle.textContent = song.name;
@@ -49,6 +51,10 @@ export default class Player {
     }
     handleSongEnd() {
         this.playButton.textContent = 'Play';
+        this.queuePointer++;
+        if (this.queuePointer < this.queue.length) {
+            this.playSong();
+        }
     }
     durationToString(duration) {
         const minutes = Math.floor(duration / 60);

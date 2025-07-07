@@ -3,6 +3,7 @@ import type { SongFile } from './types.js';
 export default class Player {
   private audio = new Audio();
   private queue: SongFile[] = [];
+  private queuePointer = 0;
 
   constructor(
     private songTitle: HTMLElement,
@@ -37,18 +38,20 @@ export default class Player {
   }
 
   playSongAndClearQueue(song: SongFile) {
-    this.playSong(song);
+    this.queue.push(song);
+    this.queuePointer = this.queue.length - 1;
+    this.playSong();
   }
 
   enqueueSong(song: SongFile) {
-    if (this.audio.paused && this.queue.length === 0) {
-      this.playSong(song);
-    } else {
-      this.queue.push(song);
+    this.queue.push(song);
+    if (this.queue.length === this.queuePointer + 1) {
+      this.playSong();
     }
   }
 
-  playSong(song: SongFile) {
+  playSong() {
+    const song = this.queue[this.queuePointer];
     this.audio.src = song.url;
     this.play();
     this.songTitle.textContent = song.name;
@@ -58,6 +61,10 @@ export default class Player {
 
   handleSongEnd() {
     this.playButton.textContent = 'Play';
+    this.queuePointer++;
+    if (this.queuePointer < this.queue.length) {
+      this.playSong();
+    }
   }
 
   durationToString(duration: number) {
