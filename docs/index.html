@@ -14,8 +14,18 @@
     </section>
     <aside id="song-sidebar">
         <h1>Soundboard</h1>
-        <h2>Song</h2>
-        <audio controls></audio>
+        <h2 id="song-title">Choose a song</h2>
+        <div id="song-buttons">
+            <button id="previous-button">Previous</button>
+            <button id="play-button">Play</button>
+            <button id="next-button">Next</button>
+        </div>
+        <div id="seek-bar-container">
+            <time datetime="PT0S" id="song-current-time">0:00</time>
+            <input id="seek-bar" max="0" type="range"
+                   value="0">
+            <time datetime="PT0S" id="song-total-time">0:00</time>
+        </div>
     </aside>
 </main>
 <script src="main.js" type="module"></script>
