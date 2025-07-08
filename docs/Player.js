@@ -124,7 +124,7 @@ export default class Player {
             const div = document.createElement('div');
             div.className = 'song';
             if (index === this.queuePointer) {
-                div.classList.add('active-song');
+                div.classList.add('active-song-queue');
             }
             const playButton = document.createElement('button');
             playButton.textContent = 'Play';
@@ -147,6 +147,8 @@ export default class Player {
         else {
             this.queueContainer.classList.remove('hidden');
         }
+        const queueDuration = this.queue.reduce((duration, song) => duration + song.duration, 0);
+        this.queueTotalTime.textContent = this.durationToString(queueDuration);
     }
     render() {
         if (!this.isSeeking) {
@@ -157,10 +159,12 @@ export default class Player {
             else {
                 this.seekBar.value = Math.floor(this.audio.currentTime).toString();
             }
-            const passedTime = this.queue
+            let passedTime = this.queue
                 .slice(0, this.queuePointer)
-                .reduce((duration, song) => duration + song.duration, 0) +
-                this.audio.currentTime;
+                .reduce((duration, song) => duration + song.duration, 0);
+            if (!this.audio.ended) {
+                passedTime += this.audio.currentTime;
+            }
             this.queueCurrentTime.textContent = this.durationToString(passedTime);
         }
         requestAnimationFrame(() => {
