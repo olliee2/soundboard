@@ -47,12 +47,14 @@ export default class Player {
         this.playButton.textContent = 'Play';
     }
     playNewSong(song) {
-        this.queue.push(song);
+        this.queue = [song];
         this.queuePointer = this.queue.length - 1;
         this.playSong();
+        this.renderQueue();
     }
     enqueueSong(song) {
         this.queue.push(song);
+        this.renderQueue();
         if (this.queue.length === this.queuePointer + 1) {
             this.playSong();
         }
@@ -68,18 +70,21 @@ export default class Player {
     previousSong() {
         if (this.queuePointer > 0) {
             this.queuePointer--;
+            this.renderQueue();
         }
         this.playSong();
     }
     nextSong() {
         if (this.queuePointer + 1 < this.queue.length) {
             this.queuePointer++;
+            this.renderQueue();
         }
         this.playSong();
     }
     handleSongEnd() {
         this.playButton.textContent = 'Play';
         this.queuePointer++;
+        this.renderQueue();
         if (this.queuePointer < this.queue.length) {
             this.playSong();
         }
@@ -88,6 +93,30 @@ export default class Player {
         const minutes = Math.floor(duration / 60);
         const seconds = Math.floor(duration % 60);
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+    renderQueue() {
+        const frag = document.createDocumentFragment();
+        this.queue.forEach((song, index) => {
+            const div = document.createElement('div');
+            div.className = 'song';
+            if (index === this.queuePointer) {
+                div.classList.add('active-song');
+            }
+            const playButton = document.createElement('button');
+            playButton.textContent = 'Play';
+            playButton.addEventListener('click', () => {
+                this.queuePointer = index;
+                this.playSong();
+                this.renderQueue();
+            });
+            const span = document.createElement('span');
+            const minutes = Math.floor(song.duration / 60);
+            const seconds = song.duration % 60;
+            span.textContent = `${minutes ? minutes + 'm' : ''}${seconds}s ${song.name}`;
+            div.append(playButton, span);
+            frag.append(div);
+        });
+        this.queueContainer.replaceChildren(frag);
     }
     render() {
         if (!this.isSeeking) {

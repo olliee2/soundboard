@@ -9,6 +9,10 @@ body {
 .song {
 }
 
+.active-song {
+    border: 1px solid blue;
+}
+
 .folder {
 }
 
