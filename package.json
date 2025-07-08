@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && cp -r public/* docs/",
+    "build": "mkdir -p docs && tsc && cp -r public/* docs/",
     "watch": "tsc --watch",
     "clean": "rm -rf docs/*",
     "start": "serve docs",

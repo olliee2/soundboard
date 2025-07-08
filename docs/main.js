@@ -1,6 +1,7 @@
 import Player from './Player.js';
 import Selector from './Selector.js';
-fetch('https://olliee2.github.io/audio/songs.json')
+const JSON_URL = 'https://olliee2.github.io/audio/songs.json';
+fetch(JSON_URL)
     .then((response) => {
     if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
