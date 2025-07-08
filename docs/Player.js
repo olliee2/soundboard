@@ -78,8 +78,11 @@ export default class Player {
         if (this.queuePointer + 1 < this.queue.length) {
             this.queuePointer++;
             this.renderQueue();
+            this.playSong();
         }
-        this.playSong();
+        else {
+            this.audio.currentTime = this.audio.duration;
+        }
     }
     handleSongEnd() {
         this.playButton.textContent = 'Play';
