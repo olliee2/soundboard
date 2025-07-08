@@ -1,10 +1,12 @@
 import type { SongFile } from './types.js';
+import Selector from './Selector.js';
 
 export default class Player {
   private audio = new Audio();
   private queue: SongFile[] = [];
   private queuePointer = 0;
   private isSeeking = false;
+  private selector: Selector | null = null;
 
   constructor(
     private songTitle: HTMLElement,
@@ -49,6 +51,18 @@ export default class Player {
     });
   }
 
+  addSelector(selector: Selector) {
+    this.selector = selector;
+  }
+
+  getCurrentSong() {
+    if (this.queuePointer < this.queue.length) {
+      return this.queue[this.queuePointer];
+    } else {
+      return null;
+    }
+  }
+
   play() {
     this.audio.play().catch((e) => console.error(e));
     this.playButton.textContent = 'Pause';
@@ -81,6 +95,7 @@ export default class Player {
     this.songTitle.textContent = song.name;
     this.seekBar.max = Math.max(1, Math.floor(song.duration)).toString();
     this.songTotalTime.textContent = this.durationToString(song.duration);
+    this.selector?.render();
   }
 
   previousSong() {
@@ -107,6 +122,8 @@ export default class Player {
     this.renderQueue();
     if (this.queuePointer < this.queue.length) {
       this.playSong();
+    } else {
+      this.selector?.render();
     }
   }
 

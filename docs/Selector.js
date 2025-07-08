@@ -4,8 +4,9 @@ export default class Selector {
         this.player = player;
         this.songJSON = songJSON;
         this.path = [];
+        player.addSelector(this);
     }
-    renderSongs(songs) {
+    renderSongs(songs, currentSongURL) {
         const frag = document.createDocumentFragment();
         let previousDurationInMinutes = -1;
         for (const song of songs) {
@@ -22,6 +23,9 @@ export default class Selector {
             const li = document.createElement('li');
             const div = document.createElement('div');
             div.className = 'song';
+            if (song.url === currentSongURL) {
+                div.classList.add('active-song-selector');
+            }
             const playButton = document.createElement('button');
             playButton.textContent = 'Play';
             playButton.addEventListener('click', () => {
@@ -42,7 +46,7 @@ export default class Selector {
         }
         return frag;
     }
-    renderFolders(folders, index) {
+    renderFolders(folders, index, currentSongURL) {
         const frag = document.createDocumentFragment();
         for (const folder of folders) {
             const li = document.createElement('li');
@@ -65,18 +69,18 @@ export default class Selector {
             });
             li.appendChild(button);
             if (index < this.path.length && folder.name === this.path[index]) {
-                li.append(this.renderFolder(folder, index + 1));
+                li.append(this.renderFolder(folder, index + 1, currentSongURL));
             }
             frag.append(li);
         }
         return frag;
     }
-    renderFolder(songFolder, index) {
+    renderFolder(songFolder, index, currentSongURL) {
         const ul = document.createElement('ul');
         const songs = songFolder.files.sort((a, b) => a.duration - b.duration);
-        const songsFragment = this.renderSongs(songs);
+        const songsFragment = this.renderSongs(songs, currentSongURL);
         const folders = songFolder.folders;
-        const foldersFragment = this.renderFolders(folders, index);
+        const foldersFragment = this.renderFolders(folders, index, currentSongURL);
         if (index === 0) {
             ul.replaceChildren(songsFragment, foldersFragment);
         }
@@ -86,7 +90,8 @@ export default class Selector {
         return ul;
     }
     render() {
-        console.log(this.player, this.songJSON);
-        this.songTree.replaceChildren(this.renderFolder(this.songJSON, 0));
+        var _a, _b;
+        const currentSongURL = (_b = (_a = this.player.getCurrentSong()) === null || _a === void 0 ? void 0 : _a.url) !== null && _b !== void 0 ? _b : null;
+        this.songTree.replaceChildren(this.renderFolder(this.songJSON, 0, currentSongURL));
     }
 }

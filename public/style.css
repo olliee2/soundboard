@@ -6,14 +6,24 @@ body {
     color: #222;
 }
 
+
+h1 {
+    margin-block: 0.67em;
+    font-size: 2em;
+}
+
 .time-separator {
 }
 
 .song {
 }
 
-.active-song {
+.active-song-queue {
     color: green;
+}
+
+.active-song-selector {
+    color: blue;
 }
 
 .folder {

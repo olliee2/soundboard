@@ -12,6 +12,7 @@ export default class Player {
         this.queue = [];
         this.queuePointer = 0;
         this.isSeeking = false;
+        this.selector = null;
         this.audio.addEventListener('ended', () => {
             this.handleSongEnd();
         });
@@ -38,6 +39,17 @@ export default class Player {
             this.isSeeking = false;
         });
     }
+    addSelector(selector) {
+        this.selector = selector;
+    }
+    getCurrentSong() {
+        if (this.queuePointer < this.queue.length) {
+            return this.queue[this.queuePointer];
+        }
+        else {
+            return null;
+        }
+    }
     play() {
         this.audio.play().catch((e) => console.error(e));
         this.playButton.textContent = 'Pause';
@@ -60,12 +72,14 @@ export default class Player {
         }
     }
     playSong() {
+        var _a;
         const song = this.queue[this.queuePointer];
         this.audio.src = song.url;
         this.play();
         this.songTitle.textContent = song.name;
         this.seekBar.max = Math.max(1, Math.floor(song.duration)).toString();
         this.songTotalTime.textContent = this.durationToString(song.duration);
+        (_a = this.selector) === null || _a === void 0 ? void 0 : _a.render();
     }
     previousSong() {
         if (this.queuePointer > 0) {
@@ -85,11 +99,15 @@ export default class Player {
         }
     }
     handleSongEnd() {
+        var _a;
         this.playButton.textContent = 'Play';
         this.queuePointer++;
         this.renderQueue();
         if (this.queuePointer < this.queue.length) {
             this.playSong();
+        }
+        else {
+            (_a = this.selector) === null || _a === void 0 ? void 0 : _a.render();
         }
     }
     durationToString(duration) {
