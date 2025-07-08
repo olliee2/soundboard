@@ -29,6 +29,10 @@ h1 {
 .folder {
 }
 
+.song-selector-image {
+    height: 24px;
+}
+
 #container {
     display: flex;
     flex-direction: row;
@@ -51,4 +55,10 @@ ul {
 
 .hidden {
     display: none;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

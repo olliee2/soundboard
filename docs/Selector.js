@@ -26,21 +26,30 @@ export default class Selector {
             if (song.url === currentSongURL) {
                 div.classList.add('active-song-selector');
             }
+            const buttonsDiv = document.createElement('div');
+            buttonsDiv.className = 'song-buttons-div';
             const playButton = document.createElement('button');
-            playButton.textContent = 'Play';
+            const playIMG = document.createElement('img');
+            playIMG.src = 'play.svg';
+            playIMG.className = 'song-selector-image';
+            playButton.append(playIMG);
             playButton.addEventListener('click', () => {
                 this.player.playNewSong(song);
             });
             const queueButton = document.createElement('button');
-            queueButton.textContent = 'Enqueue';
+            const queueIMG = document.createElement('img');
+            queueIMG.src = 'queue.png';
+            queueIMG.className = 'song-selector-image';
+            queueButton.append(queueIMG);
             queueButton.addEventListener('click', () => {
                 this.player.enqueueSong(song);
             });
+            buttonsDiv.append(playButton, queueButton);
             const span = document.createElement('span');
             const minutes = Math.floor(song.duration / 60);
             const seconds = song.duration % 60;
             span.textContent = `${minutes ? minutes + 'm' : ''}${seconds}s ${song.name}`;
-            div.append(playButton, queueButton, span);
+            div.append(buttonsDiv, span);
             li.append(div);
             frag.append(li);
         }
