@@ -18,7 +18,7 @@ export default class Player {
         this.queuePointer = 0;
         this.queueDuration = 0;
         this.isSeeking = false;
-        this.dragged = null;
+        this.draggedIndex = null;
         this.selector = null;
         this.audio.addEventListener('ended', () => {
             this.handleSongEnd();
@@ -129,18 +129,27 @@ export default class Player {
             div.className = 'song';
             div.dataset.index = index.toString();
             div.draggable = true;
-            div.addEventListener('dragstart', (e) => {
-                this.dragged = e.target;
+            div.addEventListener('dragstart', () => {
+                this.draggedIndex = index;
             });
             div.addEventListener('dragover', (e) => {
                 e.preventDefault();
             });
             div.addEventListener('drop', (e) => {
                 e.preventDefault();
-                const target = e.target;
-                if (target === null || target === void 0 ? void 0 : target.dataset.index) {
-                    console.log('dragged');
+                let target = e.target;
+                while (target && !target.classList.contains('song')) {
+                    target = target.parentElement;
                 }
+                if ((target === null || target === void 0 ? void 0 : target.dataset.index) !== undefined &&
+                    this.draggedIndex !== null &&
+                    this.draggedIndex !== Number(target.dataset.index)) {
+                    this.moveSong(this.draggedIndex, Number(target.dataset.index));
+                }
+                this.draggedIndex = null;
+            });
+            div.addEventListener('dragend', () => {
+                this.draggedIndex = null;
             });
             const dragIndicator = document.createElement('img');
             dragIndicator.src = 'drag-indicator.svg';
@@ -200,5 +209,22 @@ export default class Player {
         requestAnimationFrame(() => {
             this.render();
         });
+    }
+    moveSong(fromIndex, toIndex) {
+        if (fromIndex === toIndex)
+            return;
+        const [moved] = this.queue.splice(fromIndex, 1);
+        this.queue.splice(toIndex, 0, moved);
+        // Adjust queuePointer if needed
+        if (this.queuePointer === fromIndex) {
+            this.queuePointer = toIndex;
+        }
+        else if (fromIndex < this.queuePointer && toIndex >= this.queuePointer) {
+            this.queuePointer--;
+        }
+        else if (fromIndex > this.queuePointer && toIndex <= this.queuePointer) {
+            this.queuePointer++;
+        }
+        this.renderQueue();
     }
 }
