@@ -13,6 +13,9 @@ An online soundboard for playing .mp3, .ogg, .wav, and .flac files in the browse
 
 ## Usage & Hosting
 
+> [!IMPORTANT]
+> Due to using the .ogg file format to serve many songs, this soundboard will not work on Safari!
+
 1. Clone the repository:
    ```sh
     git clone https://github.com/olliee2/soundboard.git
