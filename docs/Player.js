@@ -157,7 +157,11 @@ export default class Player {
             else {
                 this.seekBar.value = Math.floor(this.audio.currentTime).toString();
             }
-            const passedTime = this.queue.reduce(());
+            const passedTime = this.queue
+                .slice(0, this.queuePointer)
+                .reduce((duration, song) => duration + song.duration, 0) +
+                this.audio.currentTime;
+            this.queueCurrentTime.textContent = this.durationToString(passedTime);
         }
         requestAnimationFrame(() => {
             this.render();
