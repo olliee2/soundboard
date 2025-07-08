@@ -1,5 +1,5 @@
 import Player from './Player.js';
-import type { SongFolder } from './types.js';
+import type { SongFile, SongFolder } from './types.js';
 
 export default class Selector {
   private path: string[] = [];
@@ -10,9 +10,8 @@ export default class Selector {
     private songJSON: SongFolder,
   ) {}
 
-  renderFolder(songFolder: SongFolder, index: number) {
-    const ul = document.createElement('ul');
-    const songs = songFolder.files.sort((a, b) => a.duration - b.duration);
+  renderSongs(songs: SongFile[]) {
+    const frag = document.createDocumentFragment();
     let previousDurationInMinutes = -1;
     for (const song of songs) {
       const durationInMinutes = Math.floor(song.duration / 60);
@@ -23,7 +22,7 @@ export default class Selector {
         const li = document.createElement('li');
         span.textContent = durationInMinutes.toString();
         li.append(span);
-        ul.append(li);
+        frag.append(li);
       }
       const li = document.createElement('li');
       const div = document.createElement('div');
@@ -49,9 +48,13 @@ export default class Selector {
 
       div.append(playButton, queueButton, span);
       li.append(div);
-      ul.append(li);
+      frag.append(li);
     }
-    const folders = songFolder.folders;
+    return frag;
+  }
+
+  renderFolders(folders: SongFolder[], index) {
+    const frag = document.createDocumentFragment();
     for (const folder of folders) {
       const li = document.createElement('li');
       const button = document.createElement('button');
@@ -76,8 +79,21 @@ export default class Selector {
       if (index < this.path.length && folder.name === this.path[index]) {
         li.append(this.renderFolder(folder, index + 1));
       }
+      frag.append(li);
+    }
+    return frag;
+  }
 
-      ul.append(li);
+  renderFolder(songFolder: SongFolder, index: number) {
+    const ul = document.createElement('ul');
+    const songs = songFolder.files.sort((a, b) => a.duration - b.duration);
+    const songsFragment = this.renderSongs(songs);
+    const folders = songFolder.folders;
+    const foldersFragment = this.renderFolders(folders, index);
+    if (index === 0) {
+      ul.replaceChildren(songsFragment, foldersFragment);
+    } else {
+      ul.replaceChildren(foldersFragment, songsFragment);
     }
     return ul;
   }
