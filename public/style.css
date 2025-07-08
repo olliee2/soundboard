@@ -16,6 +16,8 @@ h1 {
 }
 
 .song {
+    display: flex;
+    flex-direction: row;
 }
 
 .active-song-queue {
@@ -61,4 +63,14 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.song-controls-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.song-buttons-container {
+    display: flex;
+    flex-direction: row;
 }

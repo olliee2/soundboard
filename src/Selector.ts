@@ -34,8 +34,8 @@ export default class Selector {
         div.classList.add('active-song-selector');
       }
 
-      const buttonsDiv = document.createElement('div');
-      buttonsDiv.className = 'song-buttons-div';
+      const songButtonsContainer = document.createElement('div');
+      songButtonsContainer.className = 'song-buttons-container';
 
       const playButton = document.createElement('button');
       const playIMG = document.createElement('img');
@@ -55,7 +55,7 @@ export default class Selector {
         this.player.enqueueSong(song);
       });
 
-      buttonsDiv.append(playButton, queueButton);
+      songButtonsContainer.append(playButton, queueButton);
 
       const span = document.createElement('span');
 
@@ -63,7 +63,7 @@ export default class Selector {
       const seconds = song.duration % 60;
       span.textContent = `${minutes ? minutes + 'm' : ''}${seconds}s ${song.name}`;
 
-      div.append(buttonsDiv, span);
+      div.append(songButtonsContainer, span);
       li.append(div);
       frag.append(li);
     }
