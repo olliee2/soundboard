@@ -13,17 +13,16 @@ export default class Selector {
             const durationInMinutes = Math.floor(song.duration / 60);
             if (durationInMinutes > previousDurationInMinutes) {
                 previousDurationInMinutes = durationInMinutes;
-                const hr = document.createElement('hr');
+                const span = document.createElement('span');
+                span.className = 'time-separator';
                 const li = document.createElement('li');
-                hr.textContent = durationInMinutes.toString();
-                li.append(hr);
+                span.textContent = durationInMinutes.toString();
+                li.append(span);
                 ul.append(li);
             }
             const li = document.createElement('li');
             const div = document.createElement('div');
             div.className = 'song';
-            // photopea how to trim around image
-            // noto icons play with circle
             const playButton = document.createElement('button');
             playButton.textContent = 'Play';
             playButton.addEventListener('click', () => {

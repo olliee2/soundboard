@@ -18,10 +18,11 @@ export default class Selector {
       const durationInMinutes = Math.floor(song.duration / 60);
       if (durationInMinutes > previousDurationInMinutes) {
         previousDurationInMinutes = durationInMinutes;
-        const hr = document.createElement('hr');
+        const span = document.createElement('span');
+        span.className = 'time-separator';
         const li = document.createElement('li');
-        hr.textContent = durationInMinutes.toString();
-        li.append(hr);
+        span.textContent = durationInMinutes.toString();
+        li.append(span);
         ul.append(li);
       }
       const li = document.createElement('li');

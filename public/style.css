@@ -6,6 +6,11 @@ body {
     color: #222;
 }
 
+.time-separator {
+    border: none;
+    height: 2px;
+}
+
 .song {
 }
 
