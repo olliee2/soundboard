@@ -61,6 +61,11 @@ button {
     flex-direction: row;
 }
 
+#queue-songs-container {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 .active-song-queue {
     color: green;
 }
