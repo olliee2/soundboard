@@ -9,12 +9,14 @@ An online soundboard for playing .mp3, .ogg, .wav, and .flac files in the browse
 1. Nested music folders
 2. Automatic sorting by song duration
 3. Song queue creation, ordering, and playing
-4. 
+4.
 
 ## Usage & Hosting
 
 > [!IMPORTANT]
-> Due to using the .ogg file format to serve many songs, this soundboard will not work on Safari!
+> Due to using the .ogg file format to serve many songs, this soundboard may not work on Safari!
+> If you encounter any issues, try using a different browser. Both Firefox or Chromium derivatives are officially
+> supported.
 
 1. Clone the repository:
    ```sh
