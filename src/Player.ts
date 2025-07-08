@@ -7,6 +7,7 @@ export default class Player {
   private queuePointer = 0;
   private queueDuration = 0;
   private isSeeking = false;
+  private dragged: EventTarget | null = null;
   private selector: Selector | null = null;
 
   constructor(
@@ -101,7 +102,6 @@ export default class Player {
     this.songTitle.textContent = song.name;
     this.seekBar.max = Math.max(1, Math.floor(song.duration)).toString();
     this.songTotalTime.textContent = this.durationToString(song.duration);
-    // what next
     this.selector?.render();
   }
 
@@ -145,6 +145,26 @@ export default class Player {
     this.queue.forEach((song, index) => {
       const div = document.createElement('div');
       div.className = 'song';
+      div.dataset.index = index.toString();
+      div.draggable = true;
+
+      div.addEventListener('dragstart', (e) => {
+        this.dragged = e.target;
+      });
+      div.addEventListener('dragover', (e) => {
+        e.preventDefault();
+      });
+      div.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const target = e.target as HTMLElement | null;
+        if (target?.dataset.index) {
+          console.log('dragged');
+        }
+      });
+
+      const dragIndicator = document.createElement('img');
+      dragIndicator.src = 'drag-indicator.svg';
+      dragIndicator.draggable = false;
       if (index === this.queuePointer) {
         div.classList.add('active-song-queue');
       }
@@ -165,7 +185,7 @@ export default class Player {
       const seconds = song.duration % 60;
       span.textContent = `${minutes ? minutes + 'm' : ''}${seconds}s ${song.name}`;
 
-      div.append(playButton, span);
+      div.append(dragIndicator, playButton, span);
       frag.append(div);
     });
     this.queueSongsContainer.replaceChildren(frag);
