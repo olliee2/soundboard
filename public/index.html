@@ -25,8 +25,17 @@
             <input id="seek-bar" max="0" type="range"
                    value="0">
             <time datetime="PT0S" id="song-total-time">0:00</time>
+
         </div>
-        <div id="queue-container"></div>
+        <div class="hidden" id="queue-container">
+            <h2 id="queue-title">Queue</h2>
+            <div>
+                <time datetime="PT0S" id="queue-current-time">0:00</time>
+                /
+                <time datetime="PT0S" id="queue-total-time">0:00</time>
+            </div>
+            <div id="queue-songs-container"></div>
+        </div>
     </aside>
 </main>
 <script src="main.js" type="module"></script>

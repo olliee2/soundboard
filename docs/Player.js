@@ -1,5 +1,5 @@
 export default class Player {
-    constructor(songTitle, previousButton, playButton, nextButton, songCurrentTime, seekBar, songTotalTime, queueContainer) {
+    constructor(songTitle, previousButton, playButton, nextButton, songCurrentTime, seekBar, songTotalTime, queueContainer, queueCurrentTime, queueTotalTime, queueSongsContainer) {
         this.songTitle = songTitle;
         this.previousButton = previousButton;
         this.playButton = playButton;
@@ -8,6 +8,9 @@ export default class Player {
         this.seekBar = seekBar;
         this.songTotalTime = songTotalTime;
         this.queueContainer = queueContainer;
+        this.queueCurrentTime = queueCurrentTime;
+        this.queueTotalTime = queueTotalTime;
+        this.queueSongsContainer = queueSongsContainer;
         this.audio = new Audio();
         this.queue = [];
         this.queuePointer = 0;
@@ -137,7 +140,13 @@ export default class Player {
             div.append(playButton, span);
             frag.append(div);
         });
-        this.queueContainer.replaceChildren(frag);
+        this.queueSongsContainer.replaceChildren(frag);
+        if (this.queue.length === 0) {
+            this.queueContainer.classList.add('hidden');
+        }
+        else {
+            this.queueContainer.classList.remove('hidden');
+        }
     }
     render() {
         if (!this.isSeeking) {
@@ -148,6 +157,7 @@ export default class Player {
             else {
                 this.seekBar.value = Math.floor(this.audio.currentTime).toString();
             }
+            const passedTime = this.queue.reduce(());
         }
         requestAnimationFrame(() => {
             this.render();

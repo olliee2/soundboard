@@ -28,7 +28,10 @@ function loadApp(songJSON) {
     const seekBar = document.getElementById('seek-bar');
     const songTotalTime = document.getElementById('song-total-time');
     const queueContainer = document.getElementById('queue-container');
-    const player = new Player(songTitle, previousButton, playButton, nextButton, songCurrentTime, seekBar, songTotalTime, queueContainer);
+    const queueCurrentTime = document.getElementById('queue-current-time');
+    const queueTotalTime = document.getElementById('queue-total-time');
+    const queueSongsContainer = document.getElementById('queue-songs-container');
+    const player = new Player(songTitle, previousButton, playButton, nextButton, songCurrentTime, seekBar, songTotalTime, queueContainer, queueCurrentTime, queueTotalTime, queueSongsContainer);
     player.render();
     const songTree = document.getElementById('song-tree');
     const selector = new Selector(songTree, player, songJSON);
