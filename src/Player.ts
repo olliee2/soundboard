@@ -13,6 +13,7 @@ export default class Player {
     private songTitle: HTMLElement,
     private previousButton: HTMLButtonElement,
     private playButton: HTMLButtonElement,
+    private togglePlaybackImage: HTMLImageElement,
     private nextButton: HTMLButtonElement,
     private songCurrentTime: HTMLTimeElement,
     private seekBar: HTMLInputElement,
@@ -70,12 +71,12 @@ export default class Player {
 
   play() {
     this.audio.play().catch((e) => console.error(e));
-    this.playButton.textContent = 'Pause';
+    this.togglePlaybackImage.src = 'pause.svg';
   }
 
   pause() {
     this.audio.pause();
-    this.playButton.textContent = 'Play';
+    this.togglePlaybackImage.src = 'play.svg';
   }
 
   playNewSong(song: SongFile) {
@@ -122,7 +123,7 @@ export default class Player {
   }
 
   handleSongEnd() {
-    this.playButton.textContent = 'Play';
+    this.togglePlaybackImage.src = 'play.svg';
     this.queuePointer++;
     this.renderQueue();
     if (this.queuePointer < this.queue.length) {
@@ -148,7 +149,9 @@ export default class Player {
       }
 
       const playButton = document.createElement('button');
-      playButton.textContent = 'Play';
+      const playImage = document.createElement('img');
+      playImage.src = 'play.svg';
+      playButton.append(playImage);
       playButton.addEventListener('click', () => {
         this.queuePointer = index;
         this.playSong();

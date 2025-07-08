@@ -1,8 +1,9 @@
 export default class Player {
-    constructor(songTitle, previousButton, playButton, nextButton, songCurrentTime, seekBar, songTotalTime, queueContainer, queueCurrentTime, queueTotalTime, queueRemainingTime, queueSongsContainer) {
+    constructor(songTitle, previousButton, playButton, togglePlaybackImage, nextButton, songCurrentTime, seekBar, songTotalTime, queueContainer, queueCurrentTime, queueTotalTime, queueRemainingTime, queueSongsContainer) {
         this.songTitle = songTitle;
         this.previousButton = previousButton;
         this.playButton = playButton;
+        this.togglePlaybackImage = togglePlaybackImage;
         this.nextButton = nextButton;
         this.songCurrentTime = songCurrentTime;
         this.seekBar = seekBar;
@@ -57,11 +58,11 @@ export default class Player {
     }
     play() {
         this.audio.play().catch((e) => console.error(e));
-        this.playButton.textContent = 'Pause';
+        this.togglePlaybackImage.src = 'pause.svg';
     }
     pause() {
         this.audio.pause();
-        this.playButton.textContent = 'Play';
+        this.togglePlaybackImage.src = 'play.svg';
     }
     playNewSong(song) {
         this.queue = [song];
@@ -105,7 +106,7 @@ export default class Player {
     }
     handleSongEnd() {
         var _a;
-        this.playButton.textContent = 'Play';
+        this.togglePlaybackImage.src = 'play.svg';
         this.queuePointer++;
         this.renderQueue();
         if (this.queuePointer < this.queue.length) {
@@ -129,7 +130,9 @@ export default class Player {
                 div.classList.add('active-song-queue');
             }
             const playButton = document.createElement('button');
-            playButton.textContent = 'Play';
+            const playImage = document.createElement('img');
+            playImage.src = 'play.svg';
+            playButton.append(playImage);
             playButton.addEventListener('click', () => {
                 this.queuePointer = index;
                 this.playSong();

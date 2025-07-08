@@ -65,7 +65,7 @@ button {
     justify-content: center;
 }
 
-.song-controls-container {
+#song-controls-container {
     display: flex;
     flex-direction: row;
 }

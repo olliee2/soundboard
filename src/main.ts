@@ -30,6 +30,9 @@ function loadApp(songJSON: SongFolder) {
   const playButton = document.getElementById(
     'play-button',
   )! as HTMLButtonElement;
+  const togglePlaybackImage = document.getElementById(
+    'toggle-playback',
+  )! as HTMLImageElement;
   const nextButton = document.getElementById(
     'next-button',
   )! as HTMLButtonElement;
@@ -56,6 +59,7 @@ function loadApp(songJSON: SongFolder) {
     songTitle,
     previousButton,
     playButton,
+    togglePlaybackImage,
     nextButton,
     songCurrentTime,
     seekBar,
