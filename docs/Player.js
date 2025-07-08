@@ -215,7 +215,6 @@ export default class Player {
             return;
         const [moved] = this.queue.splice(fromIndex, 1);
         this.queue.splice(toIndex, 0, moved);
-        // Adjust queuePointer if needed
         if (this.queuePointer === fromIndex) {
             this.queuePointer = toIndex;
         }
