@@ -85,6 +85,7 @@ export default class Player {
         this.songTitle.textContent = song.name;
         this.seekBar.max = Math.max(1, Math.floor(song.duration)).toString();
         this.songTotalTime.textContent = this.durationToString(song.duration);
+        // what next
         (_a = this.selector) === null || _a === void 0 ? void 0 : _a.render();
     }
     previousSong() {

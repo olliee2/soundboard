@@ -18,6 +18,7 @@ h1 {
 .song {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .active-song-queue {
