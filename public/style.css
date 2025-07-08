@@ -21,6 +21,10 @@ h1 {
     align-items: center;
 }
 
+.player-button > img {
+    height: 40px;
+}
+
 .active-song-queue {
     color: green;
 }
