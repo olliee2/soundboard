@@ -8,10 +8,22 @@ export default class Selector {
     renderFolder(songFolder, index) {
         const ul = document.createElement('ul');
         const songs = songFolder.files.sort((a, b) => a.duration - b.duration);
+        let previousDurationInMinutes = -1;
         for (const song of songs) {
+            const durationInMinutes = Math.floor(song.duration / 60);
+            if (durationInMinutes > previousDurationInMinutes) {
+                previousDurationInMinutes = durationInMinutes;
+                const hr = document.createElement('hr');
+                const li = document.createElement('li');
+                hr.textContent = durationInMinutes.toString();
+                li.append(hr);
+                ul.append(li);
+            }
             const li = document.createElement('li');
             const div = document.createElement('div');
             div.className = 'song';
+            // photopea how to trim around image
+            // noto icons play with circle
             const playButton = document.createElement('button');
             playButton.textContent = 'Play';
             playButton.addEventListener('click', () => {
