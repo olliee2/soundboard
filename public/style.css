@@ -7,15 +7,13 @@ body {
 }
 
 .time-separator {
-    border: none;
-    height: 2px;
 }
 
 .song {
 }
 
 .active-song {
-    border: 1px solid blue;
+    color: green;
 }
 
 .folder {
@@ -35,4 +33,8 @@ body {
     height: 100vh;
     position: fixed;
     right: 0;
+}
+
+ul {
+    list-style: none;
 }
