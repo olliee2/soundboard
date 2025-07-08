@@ -1,5 +1,5 @@
 export default class Player {
-    constructor(songTitle, previousButton, playButton, nextButton, songCurrentTime, seekBar, songTotalTime, queueContainer, queueCurrentTime, queueTotalTime, queueSongsContainer) {
+    constructor(songTitle, previousButton, playButton, nextButton, songCurrentTime, seekBar, songTotalTime, queueContainer, queueCurrentTime, queueTotalTime, queueRemainingTime, queueSongsContainer) {
         this.songTitle = songTitle;
         this.previousButton = previousButton;
         this.playButton = playButton;
@@ -10,10 +10,12 @@ export default class Player {
         this.queueContainer = queueContainer;
         this.queueCurrentTime = queueCurrentTime;
         this.queueTotalTime = queueTotalTime;
+        this.queueRemainingTime = queueRemainingTime;
         this.queueSongsContainer = queueSongsContainer;
         this.audio = new Audio();
         this.queue = [];
         this.queuePointer = 0;
+        this.queueDuration = 0;
         this.isSeeking = false;
         this.selector = null;
         this.audio.addEventListener('ended', () => {
@@ -147,8 +149,9 @@ export default class Player {
         else {
             this.queueContainer.classList.remove('hidden');
         }
-        const queueDuration = this.queue.reduce((duration, song) => duration + song.duration, 0);
-        this.queueTotalTime.textContent = this.durationToString(queueDuration);
+        this.queueDuration = this.queue.reduce((duration, song) => duration + song.duration, 0);
+        this.queueTotalTime.textContent = this.durationToString(this.queueDuration);
+        this.queueTotalTime.dateTime = `PT${Math.floor(this.queueDuration)}s`;
     }
     render() {
         if (!this.isSeeking) {
@@ -166,6 +169,11 @@ export default class Player {
                 passedTime += this.audio.currentTime;
             }
             this.queueCurrentTime.textContent = this.durationToString(passedTime);
+            this.queueCurrentTime.dateTime = `PT${Math.floor(passedTime)}s`;
+            const remainingTime = this.queueDuration - passedTime;
+            this.queueRemainingTime.textContent =
+                this.durationToString(remainingTime);
+            this.queueRemainingTime.dateTime = `PT${Math.floor(remainingTime)}S`;
         }
         requestAnimationFrame(() => {
             this.render();

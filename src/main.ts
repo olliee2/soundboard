@@ -47,6 +47,9 @@ function loadApp(songJSON: SongFolder) {
   const queueTotalTime = document.getElementById(
     'queue-total-time',
   )! as HTMLTimeElement;
+  const queueRemainingTime = document.getElementById(
+    'queue-remaining-time',
+  )! as HTMLTimeElement;
   const queueSongsContainer = document.getElementById('queue-songs-container')!;
 
   const player = new Player(
@@ -60,6 +63,7 @@ function loadApp(songJSON: SongFolder) {
     queueContainer,
     queueCurrentTime,
     queueTotalTime,
+    queueRemainingTime,
     queueSongsContainer,
   );
 

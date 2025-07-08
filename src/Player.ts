@@ -5,6 +5,7 @@ export default class Player {
   private audio = new Audio();
   private queue: SongFile[] = [];
   private queuePointer = 0;
+  private queueDuration = 0;
   private isSeeking = false;
   private selector: Selector | null = null;
 
@@ -19,6 +20,7 @@ export default class Player {
     private queueContainer: HTMLElement,
     private queueCurrentTime: HTMLTimeElement,
     private queueTotalTime: HTMLTimeElement,
+    private queueRemainingTime: HTMLTimeElement,
     private queueSongsContainer: HTMLElement,
   ) {
     this.audio.addEventListener('ended', () => {
@@ -168,11 +170,12 @@ export default class Player {
     } else {
       this.queueContainer.classList.remove('hidden');
     }
-    const queueDuration = this.queue.reduce(
+    this.queueDuration = this.queue.reduce(
       (duration, song) => duration + song.duration,
       0,
     );
-    this.queueTotalTime.textContent = this.durationToString(queueDuration);
+    this.queueTotalTime.textContent = this.durationToString(this.queueDuration);
+    this.queueTotalTime.dateTime = `PT${Math.floor(this.queueDuration)}s`;
   }
 
   render() {
@@ -192,6 +195,11 @@ export default class Player {
         passedTime += this.audio.currentTime;
       }
       this.queueCurrentTime.textContent = this.durationToString(passedTime);
+      this.queueCurrentTime.dateTime = `PT${Math.floor(passedTime)}s`;
+      const remainingTime = this.queueDuration - passedTime;
+      this.queueRemainingTime.textContent =
+        this.durationToString(remainingTime);
+      this.queueRemainingTime.dateTime = `PT${Math.floor(remainingTime)}S`;
     }
     requestAnimationFrame(() => {
       this.render();
