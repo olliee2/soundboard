@@ -13,9 +13,10 @@ export default class Selector {
         this.sortMode = 'duration';
         this.sortDirection = 'ascending';
         player.addSelector(this);
-        this.filterBar.textContent = '';
+        this.songs = this.getAllSongs(songJSON);
+        this.filterBar.value = '';
         this.filterBar.addEventListener('input', () => {
-            console.log(this.filterBar.textContent);
+            console.log(this.filterBar.value);
             this.render();
         });
         this.changeModeButton.addEventListener('click', () => {
@@ -40,6 +41,13 @@ export default class Selector {
             }
             this.render();
         });
+    }
+    getAllSongs(folder) {
+        const songs = folder.files;
+        for (const subfolder of folder.folders) {
+            songs.concat(this.getAllSongs(subfolder));
+        }
+        return songs;
     }
     renderSongs(songs, currentSongURL) {
         const frag = document.createDocumentFragment();
@@ -144,7 +152,7 @@ export default class Selector {
     render() {
         var _a, _b;
         const currentSongURL = (_b = (_a = this.player.getCurrentSong()) === null || _a === void 0 ? void 0 : _a.url) !== null && _b !== void 0 ? _b : null;
-        if (this.filterBar.textContent === '') {
+        if (this.filterBar.value === '') {
             this.songTree.replaceChildren(this.renderFolder(this.songJSON, 0, currentSongURL));
         }
         else {
@@ -152,7 +160,7 @@ export default class Selector {
                 var _a, _b;
                 return song.name
                     .toLowerCase()
-                    .includes((_b = (_a = this.filterBar.textContent) === null || _a === void 0 ? void 0 : _a.toLowerCase()) !== null && _b !== void 0 ? _b : '');
+                    .includes((_b = (_a = this.filterBar.value) === null || _a === void 0 ? void 0 : _a.toLowerCase()) !== null && _b !== void 0 ? _b : '');
             });
             this.songTree.replaceChildren(this.renderSongs(filteredSongs, currentSongURL));
         }

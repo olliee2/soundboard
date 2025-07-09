@@ -19,9 +19,11 @@ export default class Selector {
   ) {
     player.addSelector(this);
 
-    this.filterBar.textContent = '';
+    this.songs = this.getAllSongs(songJSON);
+
+    this.filterBar.value = '';
     this.filterBar.addEventListener('input', () => {
-      console.log(this.filterBar.textContent);
+      console.log(this.filterBar.value);
       this.render();
     });
 
@@ -46,6 +48,14 @@ export default class Selector {
       }
       this.render();
     });
+  }
+
+  getAllSongs(folder: SongFolder) {
+    const songs = folder.files;
+    for (const subfolder of folder.folders) {
+      songs.concat(this.getAllSongs(subfolder));
+    }
+    return songs;
   }
 
   renderSongs(songs: SongFile[], currentSongURL: string | null) {
@@ -167,7 +177,7 @@ export default class Selector {
 
   render() {
     const currentSongURL = this.player.getCurrentSong()?.url ?? null;
-    if (this.filterBar.textContent === '') {
+    if (this.filterBar.value === '') {
       this.songTree.replaceChildren(
         this.renderFolder(this.songJSON, 0, currentSongURL),
       );
@@ -175,7 +185,7 @@ export default class Selector {
       const filteredSongs = this.songs.filter((song) => {
         return song.name
           .toLowerCase()
-          .includes(this.filterBar.textContent?.toLowerCase() ?? '');
+          .includes(this.filterBar.value?.toLowerCase() ?? '');
       });
       this.songTree.replaceChildren(
         this.renderSongs(filteredSongs, currentSongURL),
