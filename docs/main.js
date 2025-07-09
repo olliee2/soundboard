@@ -30,7 +30,8 @@ function isSongFolder(songFolder) {
     return (typeof songFolder === 'object' &&
         typeof songFolder.name === 'string' &&
         Array.isArray(songFolder.files) &&
-        songFolder);
+        songFolder.files.every(isSongFile) &&
+    );
 }
 function loadApp(songJSON) {
     const songTitle = document.getElementById('song-title');

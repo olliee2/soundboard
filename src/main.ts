@@ -19,6 +19,9 @@ fetch(JSON_URL)
     }
   })
   .then((json) => {
+    if (!isSongFolder(json)) {
+      throw new Error('Invalid song data');
+    }
     loadApp(json);
   });
 
@@ -32,15 +35,16 @@ function isSongFile(songFile: any) {
   );
 }
 
-function isSongFolder(songFolder:any) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isSongFolder(songFolder: any) {
   return (
     typeof songFolder === 'object' &&
-      typeof songFolder.name === 'string' &&
-      Array.isArray(songFolder.files) &&
-      songFolder.files.every(isSongFile) &&
-      //
-    true
-  )
+    typeof songFolder.name === 'string' &&
+    Array.isArray(songFolder.files) &&
+    songFolder.files.every(isSongFile) &&
+    Array.isArray(songFolder.folders) &&
+    songFolder.folders.every(isSongFile)
+  );
 }
 
 function loadApp(songJSON: SongFolder) {
