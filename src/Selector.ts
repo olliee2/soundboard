@@ -3,7 +3,7 @@ import type { SongFile, SongFolder } from './types.js';
 
 export default class Selector {
   private path: string[] = [];
-  private songs: SongFile[] = [];
+  private readonly songs: SongFile[] = [];
   private sortMode: 'duration' | 'name' = 'duration';
   private sortDirection: 'ascending' | 'descending' = 'ascending';
 
@@ -62,6 +62,12 @@ export default class Selector {
   renderSongs(songs: SongFile[], currentSongURL: string | null) {
     const frag = document.createDocumentFragment();
     let previousDurationInMinutes: number | null = null;
+    if (this.sortMode === 'duration') {
+      songs = songs.sort((a, b) => a.duration - b.duration);
+    } else {
+      songs = songs.sort((a, b) => (a.name > b.name ? -1 : 1));
+    }
+    if (this.sortDirection === 'descending') songs.reverse();
     for (const song of songs) {
       const durationInMinutes = Math.floor(song.duration / 60);
       if (durationInMinutes !== previousDurationInMinutes) {
@@ -158,14 +164,7 @@ export default class Selector {
     currentSongURL: string | null,
   ) {
     const ul = document.createElement('ul');
-    let songs: SongFile[];
-    if (this.sortMode === 'duration') {
-      songs = songFolder.files.sort((a, b) => a.duration - b.duration);
-    } else {
-      songs = songFolder.files.sort((a, b) => (a.name > b.name ? -1 : 1));
-    }
-    if (this.sortDirection === 'descending') songs.reverse();
-    const songsFragment = this.renderSongs(songs, currentSongURL);
+    const songsFragment = this.renderSongs(songFolder.files, currentSongURL);
     const folders = songFolder.folders;
     const foldersFragment = this.renderFolders(folders, index, currentSongURL);
     if (index === 0) {
