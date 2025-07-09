@@ -14,7 +14,6 @@ export default class Selector {
         this.sortDirection = 'ascending';
         player.addSelector(this);
         this.songs = this.getAllSongs(songJSON);
-        console.log(this.songs);
         this.filterBar.value = '';
         this.filterBar.addEventListener('input', () => {
             console.log(this.filterBar.value);
