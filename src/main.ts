@@ -76,14 +76,22 @@ function loadApp(songJSON: SongFolder) {
   const changeModeButton = document.getElementById(
     'change-mode-button',
   )! as HTMLButtonElement;
+  const changeModeImage = document.getElementById(
+    'change-mode-image',
+  )! as HTMLImageElement;
   const changeDirectionButton = document.getElementById(
     'change-direction-button',
   )! as HTMLButtonElement;
+  const changeDirectionImage = document.getElementById(
+    'change-direction-image',
+  )! as HTMLImageElement;
   const songTree = document.getElementById('song-tree')!;
 
   const selector = new Selector(
     changeModeButton,
+    changeModeImage,
     changeDirectionButton,
+    changeDirectionImage,
     songTree,
     player,
     songJSON,

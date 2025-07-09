@@ -36,8 +36,10 @@ function loadApp(songJSON) {
     const player = new Player(songTitle, previousButton, playButton, togglePlaybackImage, nextButton, songCurrentTime, seekBar, songTotalTime, queueContainer, queueCurrentTime, queueTotalTime, queueRemainingTime, queueSongsContainer);
     player.render();
     const changeModeButton = document.getElementById('change-mode-button');
+    const changeModeImage = document.getElementById('change-mode-image');
     const changeDirectionButton = document.getElementById('change-direction-button');
+    const changeDirectionImage = document.getElementById('change-direction-image');
     const songTree = document.getElementById('song-tree');
-    const selector = new Selector(changeModeButton, changeDirectionButton, songTree, player, songJSON);
+    const selector = new Selector(changeModeButton, changeModeImage, changeDirectionButton, changeDirectionImage, songTree, player, songJSON);
     selector.render();
 }
