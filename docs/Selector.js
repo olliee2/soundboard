@@ -29,7 +29,7 @@ export default class Selector {
             }
             else {
                 this.sortDirection = 'ascending';
-                this.changeModeImage.src = 'arrow-up.svg';
+                this.changeDirectionImage.src = 'arrow-up.svg';
             }
             this.render();
         });
