@@ -17,28 +17,8 @@ fetch(JSON_URL)
     }
 })
     .then((json) => {
-    if (!isSongFolder(json)) {
-        console.log(JSON.stringify(json));
-        throw new Error('Invalid song data');
-    }
     loadApp(json);
 });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isSongFile(songFile) {
-    return (typeof songFile === 'object' &&
-        typeof songFile.name === 'string' &&
-        typeof songFile.duration === 'number' &&
-        typeof songFile.url === 'string');
-}
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isSongFolder(songFolder) {
-    return (typeof songFolder === 'object' &&
-        typeof songFolder.name === 'string' &&
-        Array.isArray(songFolder.files) &&
-        songFolder.files.every(isSongFile) &&
-        Array.isArray(songFolder.folders) &&
-        songFolder.folders.every(isSongFolder));
-}
 function loadApp(songJSON) {
     const songTitle = document.getElementById('song-title');
     const previousButton = document.getElementById('previous-button');
