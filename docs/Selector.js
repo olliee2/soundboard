@@ -1,10 +1,23 @@
 export default class Selector {
-    constructor(songTree, player, songJSON) {
+    constructor(changeModeButton, changeDirectionButton, songTree, player, songJSON) {
+        this.changeModeButton = changeModeButton;
+        this.changeDirectionButton = changeDirectionButton;
         this.songTree = songTree;
         this.player = player;
         this.songJSON = songJSON;
         this.path = [];
+        this.sortMode = 'duration';
+        this.sortDirection = 'ascending';
         player.addSelector(this);
+        changeModeButton.addEventListener('click', () => {
+            this.sortMode = this.sortMode === 'duration' ? 'name' : 'duration';
+            this.render();
+        });
+        changeDirectionButton.addEventListener('click', () => {
+            this.sortDirection =
+                this.sortDirection === 'ascending' ? 'descending' : 'ascending';
+            this.render();
+        });
     }
     renderSongs(songs, currentSongURL) {
         const frag = document.createDocumentFragment();
@@ -86,7 +99,15 @@ export default class Selector {
     }
     renderFolder(songFolder, index, currentSongURL) {
         const ul = document.createElement('ul');
-        const songs = songFolder.files.sort((a, b) => a.duration - b.duration);
+        let songs = [];
+        if (this.sortMode === 'duration') {
+            songs = songFolder.files.sort((a, b) => a.duration - b.duration);
+        }
+        else {
+            songs = songFolder.files.sort((a, b) => (a.name > b.name ? -1 : 1));
+        }
+        if (this.sortDirection === 'descending')
+            songs.reverse();
         const songsFragment = this.renderSongs(songs, currentSongURL);
         const folders = songFolder.folders;
         const foldersFragment = this.renderFolders(folders, index, currentSongURL);
