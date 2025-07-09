@@ -180,3 +180,15 @@ button:focus {
     display: flex;
     flex-direction: row;
 }
+
+#filter-bar {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5em 1em;
+    margin-bottom: 1em;
+    border: none;
+    border-radius: 8px;
+    background: #e3e8f0;
+    font-size: 1em;
+    color: #222;
+}
