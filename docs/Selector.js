@@ -1,5 +1,6 @@
 export default class Selector {
-    constructor(changeModeButton, changeModeImage, changeDirectionButton, changeDirectionImage, songTree, player, songJSON) {
+    constructor(filterBar, changeModeButton, changeModeImage, changeDirectionButton, changeDirectionImage, songTree, player, songJSON) {
+        this.filterBar = filterBar;
         this.changeModeButton = changeModeButton;
         this.changeModeImage = changeModeImage;
         this.changeDirectionButton = changeDirectionButton;
@@ -8,10 +9,16 @@ export default class Selector {
         this.player = player;
         this.songJSON = songJSON;
         this.path = [];
+        this.songs = [];
         this.sortMode = 'duration';
         this.sortDirection = 'ascending';
         player.addSelector(this);
-        changeModeButton.addEventListener('click', () => {
+        this.filterBar.textContent = '';
+        this.filterBar.addEventListener('input', () => {
+            console.log(this.filterBar.textContent);
+            this.render();
+        });
+        this.changeModeButton.addEventListener('click', () => {
             if (this.sortMode === 'duration') {
                 this.sortMode = 'name';
                 this.changeModeImage.src = 'alphabet.svg';
@@ -22,7 +29,7 @@ export default class Selector {
             }
             this.render();
         });
-        changeDirectionButton.addEventListener('click', () => {
+        this.changeDirectionButton.addEventListener('click', () => {
             if (this.sortDirection === 'ascending') {
                 this.sortDirection = 'descending';
                 this.changeDirectionImage.src = 'arrow-down.svg';
@@ -137,6 +144,17 @@ export default class Selector {
     render() {
         var _a, _b;
         const currentSongURL = (_b = (_a = this.player.getCurrentSong()) === null || _a === void 0 ? void 0 : _a.url) !== null && _b !== void 0 ? _b : null;
-        this.songTree.replaceChildren(this.renderFolder(this.songJSON, 0, currentSongURL));
+        if (this.filterBar.textContent === '') {
+            this.songTree.replaceChildren(this.renderFolder(this.songJSON, 0, currentSongURL));
+        }
+        else {
+            const filteredSongs = this.songs.filter((song) => {
+                var _a, _b;
+                return song.name
+                    .toLowerCase()
+                    .includes((_b = (_a = this.filterBar.textContent) === null || _a === void 0 ? void 0 : _a.toLowerCase()) !== null && _b !== void 0 ? _b : '');
+            });
+            this.songTree.replaceChildren(this.renderSongs(filteredSongs, currentSongURL));
+        }
     }
 }

@@ -73,6 +73,7 @@ function loadApp(songJSON: SongFolder) {
 
   player.render();
 
+  const filterBar = document.getElementById('filter-bar')! as HTMLInputElement;
   const changeModeButton = document.getElementById(
     'change-mode-button',
   )! as HTMLButtonElement;
@@ -88,6 +89,7 @@ function loadApp(songJSON: SongFolder) {
   const songTree = document.getElementById('song-tree')!;
 
   const selector = new Selector(
+    filterBar,
     changeModeButton,
     changeModeImage,
     changeDirectionButton,

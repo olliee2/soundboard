@@ -3,10 +3,12 @@ import type { SongFile, SongFolder } from './types.js';
 
 export default class Selector {
   private path: string[] = [];
+  private songs: SongFile[] = [];
   private sortMode: 'duration' | 'name' = 'duration';
   private sortDirection: 'ascending' | 'descending' = 'ascending';
 
   constructor(
+    private filterBar: HTMLInputElement,
     private changeModeButton: HTMLButtonElement,
     private changeModeImage: HTMLImageElement,
     private changeDirectionButton: HTMLButtonElement,
@@ -17,7 +19,13 @@ export default class Selector {
   ) {
     player.addSelector(this);
 
-    changeModeButton.addEventListener('click', () => {
+    this.filterBar.textContent = '';
+    this.filterBar.addEventListener('input', () => {
+      console.log(this.filterBar.textContent);
+      this.render();
+    });
+
+    this.changeModeButton.addEventListener('click', () => {
       if (this.sortMode === 'duration') {
         this.sortMode = 'name';
         this.changeModeImage.src = 'alphabet.svg';
@@ -28,7 +36,7 @@ export default class Selector {
       this.render();
     });
 
-    changeDirectionButton.addEventListener('click', () => {
+    this.changeDirectionButton.addEventListener('click', () => {
       if (this.sortDirection === 'ascending') {
         this.sortDirection = 'descending';
         this.changeDirectionImage.src = 'arrow-down.svg';
@@ -159,8 +167,19 @@ export default class Selector {
 
   render() {
     const currentSongURL = this.player.getCurrentSong()?.url ?? null;
-    this.songTree.replaceChildren(
-      this.renderFolder(this.songJSON, 0, currentSongURL),
-    );
+    if (this.filterBar.textContent === '') {
+      this.songTree.replaceChildren(
+        this.renderFolder(this.songJSON, 0, currentSongURL),
+      );
+    } else {
+      const filteredSongs = this.songs.filter((song) => {
+        return song.name
+          .toLowerCase()
+          .includes(this.filterBar.textContent?.toLowerCase() ?? '');
+      });
+      this.songTree.replaceChildren(
+        this.renderSongs(filteredSongs, currentSongURL),
+      );
+    }
   }
 }
