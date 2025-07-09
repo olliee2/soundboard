@@ -29,7 +29,7 @@ export default class Selector {
 
   renderSongs(songs: SongFile[], currentSongURL: string | null) {
     const frag = document.createDocumentFragment();
-    let previousDurationInMinutes = -1;
+    let previousDurationInMinutes: number | null = null;
     for (const song of songs) {
       const durationInMinutes = Math.floor(song.duration / 60);
       if (durationInMinutes !== previousDurationInMinutes) {

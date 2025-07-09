@@ -21,10 +21,10 @@ export default class Selector {
     }
     renderSongs(songs, currentSongURL) {
         const frag = document.createDocumentFragment();
-        let previousDurationInMinutes = -1;
+        let previousDurationInMinutes = null;
         for (const song of songs) {
             const durationInMinutes = Math.floor(song.duration / 60);
-            if (durationInMinutes > previousDurationInMinutes) {
+            if (durationInMinutes !== previousDurationInMinutes) {
                 previousDurationInMinutes = durationInMinutes;
                 const span = document.createElement('span');
                 span.className = 'time-separator';
