@@ -3,13 +3,21 @@ import type { SongFile, SongFolder } from './types.js';
 
 export default class Selector {
   private path: string[] = [];
+  private sortMode: 'duration' | 'name' = 'duration';
+  private sortDirection: 'ascending' | 'descending' = 'ascending';
 
   constructor(
+    private changeModeButton: HTMLButtonElement,
+    private changeDirectionButton: HTMLButtonElement,
     private songTree: HTMLElement,
     private player: Player,
     private songJSON: SongFolder,
   ) {
     player.addSelector(this);
+
+    changeModeButton.addEventListener('click', () => {
+      this.sortMode = this.sortMode === 'duration' ? 'name' : 'duration';
+    });
   }
 
   renderSongs(songs: SongFile[], currentSongURL: string | null) {
