@@ -20,6 +20,7 @@ fetch(JSON_URL)
   })
   .then((json) => {
     if (!isSongFolder(json)) {
+      console.log(JSON.stringify(json));
       throw new Error('Invalid song data');
     }
     loadApp(json);
@@ -43,7 +44,7 @@ function isSongFolder(songFolder: any) {
     Array.isArray(songFolder.files) &&
     songFolder.files.every(isSongFile) &&
     Array.isArray(songFolder.folders) &&
-    songFolder.folders.every(isSongFile)
+    songFolder.folders.every(isSongFolder)
   );
 }
 
