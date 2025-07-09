@@ -31,10 +31,10 @@ export default class Selector {
     changeDirectionButton.addEventListener('click', () => {
       if (this.sortDirection === 'ascending') {
         this.sortDirection = 'descending';
-        this.changeDirectionImage.src = 'down.svg';
+        this.changeDirectionImage.src = 'arrow-down.svg';
       } else {
         this.sortDirection = 'ascending';
-        this.changeModeImage.src = 'up.svg';
+        this.changeDirectionImage.src = 'arrow-up.svg';
       }
       this.render();
     });

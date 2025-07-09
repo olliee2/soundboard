@@ -23,8 +23,14 @@ export default class Selector {
             this.render();
         });
         changeDirectionButton.addEventListener('click', () => {
-            this.sortDirection =
-                this.sortDirection === 'ascending' ? 'descending' : 'ascending';
+            if (this.sortDirection === 'ascending') {
+                this.sortDirection = 'descending';
+                this.changeDirectionImage.src = 'arrow-down.svg';
+            }
+            else {
+                this.sortDirection = 'ascending';
+                this.changeModeImage.src = 'arrow-up.svg';
+            }
             this.render();
         });
     }
