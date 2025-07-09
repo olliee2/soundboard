@@ -6,6 +6,7 @@ export default class Selector {
   private readonly songs: SongFile[] = [];
   private sortMode: 'duration' | 'name' = 'duration';
   private sortDirection: 'ascending' | 'descending' = 'ascending';
+  private debounceTimer: number | null = null;
 
   constructor(
     private filterBar: HTMLInputElement,
@@ -23,7 +24,8 @@ export default class Selector {
 
     this.filterBar.value = '';
     this.filterBar.addEventListener('input', () => {
-      this.render();
+      if (this.debounceTimer) clearTimeout(this.debounceTimer);
+      this.debounceTimer = setTimeout(() => this.render(), 150);
     });
 
     this.changeModeButton.addEventListener('click', () => {

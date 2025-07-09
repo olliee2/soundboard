@@ -12,11 +12,14 @@ export default class Selector {
         this.songs = [];
         this.sortMode = 'duration';
         this.sortDirection = 'ascending';
+        this.debounceTimer = null;
         player.addSelector(this);
         this.songs = this.getAllSongs(songJSON);
         this.filterBar.value = '';
         this.filterBar.addEventListener('input', () => {
-            this.render();
+            if (this.debounceTimer)
+                clearTimeout(this.debounceTimer);
+            this.debounceTimer = setTimeout(() => this.render(), 150);
         });
         this.changeModeButton.addEventListener('click', () => {
             if (this.sortMode === 'duration') {
