@@ -53,16 +53,26 @@ export default class Selector {
     renderSongs(songs, currentSongURL) {
         const frag = document.createDocumentFragment();
         let previousDurationInMinutes = null;
+        if (this.sortMode === 'duration') {
+            songs = songs.sort((a, b) => a.duration - b.duration);
+        }
+        else {
+            songs = songs.sort((a, b) => (a.name > b.name ? -1 : 1));
+        }
+        if (this.sortDirection === 'descending')
+            songs.reverse();
         for (const song of songs) {
-            const durationInMinutes = Math.floor(song.duration / 60);
-            if (durationInMinutes !== previousDurationInMinutes) {
-                previousDurationInMinutes = durationInMinutes;
-                const span = document.createElement('span');
-                span.className = 'time-separator';
-                const li = document.createElement('li');
-                span.textContent = durationInMinutes.toString();
-                li.append(span);
-                frag.append(li);
+            if (this.sortMode === 'duration') {
+                const durationInMinutes = Math.floor(song.duration / 60);
+                if (durationInMinutes !== previousDurationInMinutes) {
+                    previousDurationInMinutes = durationInMinutes;
+                    const span = document.createElement('span');
+                    span.className = 'time-separator';
+                    const li = document.createElement('li');
+                    span.textContent = durationInMinutes.toString();
+                    li.append(span);
+                    frag.append(li);
+                }
             }
             const li = document.createElement('li');
             const div = document.createElement('div');
@@ -130,16 +140,7 @@ export default class Selector {
     }
     renderFolder(songFolder, index, currentSongURL) {
         const ul = document.createElement('ul');
-        let songs;
-        if (this.sortMode === 'duration') {
-            songs = songFolder.files.sort((a, b) => a.duration - b.duration);
-        }
-        else {
-            songs = songFolder.files.sort((a, b) => (a.name > b.name ? -1 : 1));
-        }
-        if (this.sortDirection === 'descending')
-            songs.reverse();
-        const songsFragment = this.renderSongs(songs, currentSongURL);
+        const songsFragment = this.renderSongs(songFolder.files, currentSongURL);
         const folders = songFolder.folders;
         const foldersFragment = this.renderFolders(folders, index, currentSongURL);
         if (index === 0) {
