@@ -16,7 +16,6 @@ export default class Selector {
         this.songs = this.getAllSongs(songJSON);
         this.filterBar.value = '';
         this.filterBar.addEventListener('input', () => {
-            console.log(this.filterBar.value);
             this.render();
         });
         this.changeModeButton.addEventListener('click', () => {
