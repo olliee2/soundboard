@@ -36,6 +36,9 @@ function loadApp(songJSON: SongFolder) {
   const nextButton = document.getElementById(
     'next-button',
   )! as HTMLButtonElement;
+  const shuffleButton = document.getElementById(
+    'shuffle-button',
+  )! as HTMLButtonElement;
   const songCurrentTime = document.getElementById(
     'song-current-time',
   )! as HTMLTimeElement;
@@ -61,6 +64,7 @@ function loadApp(songJSON: SongFolder) {
     playButton,
     togglePlaybackImage,
     nextButton,
+    shuffleButton,
     songCurrentTime,
     seekBar,
     songTotalTime,

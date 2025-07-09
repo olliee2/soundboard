@@ -1,10 +1,11 @@
 export default class Player {
-    constructor(songTitle, previousButton, playButton, togglePlaybackImage, nextButton, songCurrentTime, seekBar, songTotalTime, queueContainer, queueCurrentTime, queueTotalTime, queueRemainingTime, queueSongsContainer) {
+    constructor(songTitle, previousButton, playButton, togglePlaybackImage, nextButton, shuffleButton, songCurrentTime, seekBar, songTotalTime, queueContainer, queueCurrentTime, queueTotalTime, queueRemainingTime, queueSongsContainer) {
         this.songTitle = songTitle;
         this.previousButton = previousButton;
         this.playButton = playButton;
         this.togglePlaybackImage = togglePlaybackImage;
         this.nextButton = nextButton;
+        this.shuffleButton = shuffleButton;
         this.songCurrentTime = songCurrentTime;
         this.seekBar = seekBar;
         this.songTotalTime = songTotalTime;
@@ -36,6 +37,15 @@ export default class Player {
         });
         this.nextButton.addEventListener('click', () => {
             this.nextSong();
+        });
+        this.shuffleButton.addEventListener('click', () => {
+            for (let i = 0; i < this.queue.length; i++) {
+                const j = Math.floor(Math.random() * this.queue.length);
+                [this.queue[i], this.queue[j]] = [this.queue[j], this.queue[i]];
+            }
+            this.queuePointer = 0;
+            this.renderQueue();
+            this.playSong();
         });
         this.seekBar.addEventListener('input', () => {
             this.isSeeking = true;
