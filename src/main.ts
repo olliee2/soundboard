@@ -73,10 +73,20 @@ function loadApp(songJSON: SongFolder) {
 
   player.render();
 
-  const changeModeButton = document.getElementById('change-mode-button')! as HTMLButtonElement;
-  const changeDirectionButton = document.getElementById('change-direction-button')! as HTMLButtonElement;
+  const changeModeButton = document.getElementById(
+    'change-mode-button',
+  )! as HTMLButtonElement;
+  const changeDirectionButton = document.getElementById(
+    'change-direction-button',
+  )! as HTMLButtonElement;
   const songTree = document.getElementById('song-tree')!;
 
-  const selector = new Selector(changeModeButton, changeDirectionButton, songTree, player, songJSON);
+  const selector = new Selector(
+    changeModeButton,
+    changeDirectionButton,
+    songTree,
+    player,
+    songJSON,
+  );
   selector.render();
 }
