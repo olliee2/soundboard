@@ -19,6 +19,19 @@ fetch(JSON_URL)
     .then((json) => {
     loadApp(json);
 });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isSongFile(songFile) {
+    return (typeof songFile === 'object' &&
+        typeof songFile.name === 'string' &&
+        typeof songFile.duration === 'number' &&
+        typeof songFile.url === 'string');
+}
+function isSongFolder(songFolder) {
+    return (typeof songFolder === 'object' &&
+        typeof songFolder.name === 'string' &&
+        Array.isArray(songFolder.files) &&
+        songFolder);
+}
 function loadApp(songJSON) {
     const songTitle = document.getElementById('song-title');
     const previousButton = document.getElementById('previous-button');
