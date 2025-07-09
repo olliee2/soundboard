@@ -20,6 +20,7 @@ export default class Selector {
     player.addSelector(this);
 
     this.songs = this.getAllSongs(songJSON);
+    console.log(this.songs);
 
     this.filterBar.value = '';
     this.filterBar.addEventListener('input', () => {
@@ -51,9 +52,9 @@ export default class Selector {
   }
 
   getAllSongs(folder: SongFolder) {
-    const songs = folder.files;
+    let songs = folder.files;
     for (const subfolder of folder.folders) {
-      songs.concat(this.getAllSongs(subfolder));
+      songs = songs.concat(this.getAllSongs(subfolder));
     }
     return songs;
   }
@@ -187,9 +188,9 @@ export default class Selector {
           .toLowerCase()
           .includes(this.filterBar.value?.toLowerCase() ?? '');
       });
-      this.songTree.replaceChildren(
-        this.renderSongs(filteredSongs, currentSongURL),
-      );
+      const ul = document.createElement('ul');
+      ul.append(this.renderSongs(filteredSongs, currentSongURL));
+      this.songTree.replaceChildren(ul);
     }
   }
 }

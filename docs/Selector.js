@@ -14,6 +14,7 @@ export default class Selector {
         this.sortDirection = 'ascending';
         player.addSelector(this);
         this.songs = this.getAllSongs(songJSON);
+        console.log(this.songs);
         this.filterBar.value = '';
         this.filterBar.addEventListener('input', () => {
             console.log(this.filterBar.value);
@@ -43,9 +44,9 @@ export default class Selector {
         });
     }
     getAllSongs(folder) {
-        const songs = folder.files;
+        let songs = folder.files;
         for (const subfolder of folder.folders) {
-            songs.concat(this.getAllSongs(subfolder));
+            songs = songs.concat(this.getAllSongs(subfolder));
         }
         return songs;
     }
@@ -162,7 +163,9 @@ export default class Selector {
                     .toLowerCase()
                     .includes((_b = (_a = this.filterBar.value) === null || _a === void 0 ? void 0 : _a.toLowerCase()) !== null && _b !== void 0 ? _b : '');
             });
-            this.songTree.replaceChildren(this.renderSongs(filteredSongs, currentSongURL));
+            const ul = document.createElement('ul');
+            ul.append(this.renderSongs(filteredSongs, currentSongURL));
+            this.songTree.replaceChildren(ul);
         }
     }
 }
