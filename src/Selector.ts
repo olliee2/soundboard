@@ -20,14 +20,22 @@ export default class Selector {
     changeModeButton.addEventListener('click', () => {
       if (this.sortMode === 'duration') {
         this.sortMode = 'name';
+        this.changeModeImage.src = 'alphabet.svg';
+      } else {
+        this.sortMode = 'duration';
+        this.changeModeImage.src = 'time.svg';
       }
-      this.sortMode = this.sortMode === 'duration' ? 'name' : 'duration';
       this.render();
     });
 
     changeDirectionButton.addEventListener('click', () => {
-      this.sortDirection =
-        this.sortDirection === 'ascending' ? 'descending' : 'ascending';
+      if (this.sortDirection === 'ascending') {
+        this.sortDirection = 'descending';
+        this.changeDirectionImage.src = 'down.svg';
+      } else {
+        this.sortDirection = 'ascending';
+        this.changeModeImage.src = 'up.svg';
+      }
       this.render();
     });
   }

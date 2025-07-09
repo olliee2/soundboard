@@ -14,8 +14,12 @@ export default class Selector {
         changeModeButton.addEventListener('click', () => {
             if (this.sortMode === 'duration') {
                 this.sortMode = 'name';
+                this.changeModeImage.src = 'alphabet.svg';
             }
-            this.sortMode = this.sortMode === 'duration' ? 'name' : 'duration';
+            else {
+                this.sortMode = 'duration';
+                this.changeModeImage.src = 'time.svg';
+            }
             this.render();
         });
         changeDirectionButton.addEventListener('click', () => {
