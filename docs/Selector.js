@@ -1,7 +1,9 @@
 export default class Selector {
-    constructor(changeModeButton, changeDirectionButton, songTree, player, songJSON) {
+    constructor(changeModeButton, changeModeImage, changeDirectionButton, changeDirectionImage, songTree, player, songJSON) {
         this.changeModeButton = changeModeButton;
+        this.changeModeImage = changeModeImage;
         this.changeDirectionButton = changeDirectionButton;
+        this.changeDirectionImage = changeDirectionImage;
         this.songTree = songTree;
         this.player = player;
         this.songJSON = songJSON;
@@ -10,6 +12,9 @@ export default class Selector {
         this.sortDirection = 'ascending';
         player.addSelector(this);
         changeModeButton.addEventListener('click', () => {
+            if (this.sortMode === 'duration') {
+                this.sortMode = 'name';
+            }
             this.sortMode = this.sortMode === 'duration' ? 'name' : 'duration';
             this.render();
         });
@@ -99,7 +104,7 @@ export default class Selector {
     }
     renderFolder(songFolder, index, currentSongURL) {
         const ul = document.createElement('ul');
-        let songs = [];
+        let songs;
         if (this.sortMode === 'duration') {
             songs = songFolder.files.sort((a, b) => a.duration - b.duration);
         }

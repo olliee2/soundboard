@@ -8,7 +8,9 @@ export default class Selector {
 
   constructor(
     private changeModeButton: HTMLButtonElement,
+    private changeModeImage: HTMLImageElement,
     private changeDirectionButton: HTMLButtonElement,
+    private changeDirectionImage: HTMLImageElement,
     private songTree: HTMLElement,
     private player: Player,
     private songJSON: SongFolder,
@@ -16,6 +18,9 @@ export default class Selector {
     player.addSelector(this);
 
     changeModeButton.addEventListener('click', () => {
+      if (this.sortMode === 'duration') {
+        this.sortMode = 'name';
+      }
       this.sortMode = this.sortMode === 'duration' ? 'name' : 'duration';
       this.render();
     });
@@ -126,7 +131,7 @@ export default class Selector {
     currentSongURL: string | null,
   ) {
     const ul = document.createElement('ul');
-    let songs: SongFile[] = [];
+    let songs: SongFile[];
     if (this.sortMode === 'duration') {
       songs = songFolder.files.sort((a, b) => a.duration - b.duration);
     } else {
