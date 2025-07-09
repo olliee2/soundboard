@@ -128,18 +128,11 @@ export default class Selector {
     const ul = document.createElement('ul');
     let songs: SongFile[] = [];
     if (this.sortMode === 'duration') {
-      if (this.sortDirection === 'ascending') {
-        songs = songFolder.files.sort((a, b) => a.duration - b.duration);
-      } else {
-        songs = songFolder.files.sort((a, b) => b.duration - a.duration);
-      }
+      songs = songFolder.files.sort((a, b) => a.duration - b.duration);
     } else {
-      if (this.sortDirection === 'ascending') {
-        songs = songFolder.files.sort((a, b) => b.name - a.name);
-      } else {
-        songs = songFolder.files.sort((a, b) => b.name - a.name);
-      }
+      songs = songFolder.files.sort((a, b) => (a.name > b.name ? -1 : 1));
     }
+    if (this.sortDirection === 'descending') songs.reverse();
     const songsFragment = this.renderSongs(songs, currentSongURL);
     const folders = songFolder.folders;
     const foldersFragment = this.renderFolders(folders, index, currentSongURL);
