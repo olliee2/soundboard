@@ -3,6 +3,7 @@ import Selector from './Selector.js';
 
 export default class Player {
   private audio = new Audio();
+  private preloadAudio = new Audio();
   private queue: SongFile[] = [];
   private queuePointer = 0;
   private queueDuration = 0;
@@ -114,6 +115,12 @@ export default class Player {
     this.seekBar.max = Math.max(1, Math.floor(song.duration)).toString();
     this.songTotalTime.textContent = this.durationToString(song.duration);
     this.selector?.render();
+
+    if (this.queuePointer + 1 < this.queue.length) {
+      const nextSong = this.queue[this.queuePointer + 1];
+      this.preloadAudio.src = nextSong.url;
+      this.preloadAudio.load();
+    }
   }
 
   previousSong() {

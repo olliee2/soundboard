@@ -15,6 +15,7 @@ export default class Player {
         this.queueRemainingTime = queueRemainingTime;
         this.queueSongsContainer = queueSongsContainer;
         this.audio = new Audio();
+        this.preloadAudio = new Audio();
         this.queue = [];
         this.queuePointer = 0;
         this.queueDuration = 0;
@@ -97,6 +98,11 @@ export default class Player {
         this.seekBar.max = Math.max(1, Math.floor(song.duration)).toString();
         this.songTotalTime.textContent = this.durationToString(song.duration);
         (_a = this.selector) === null || _a === void 0 ? void 0 : _a.render();
+        if (this.queuePointer + 1 < this.queue.length) {
+            const nextSong = this.queue[this.queuePointer + 1];
+            this.preloadAudio.src = nextSong.url;
+            this.preloadAudio.load();
+        }
     }
     previousSong() {
         if (this.queuePointer > 0) {
