@@ -29,7 +29,7 @@ export default class Player {
             this.previousSong();
         });
         this.playButton.addEventListener('click', () => {
-            if (this.audio.paused) {
+            if (this.audio.paused && this.audio.src) {
                 this.play();
             }
             else {
@@ -71,16 +71,6 @@ export default class Player {
             return null;
         }
     }
-    play() {
-        if (this.audio.src) {
-            this.audio.play().catch((e) => console.error(e));
-        }
-        this.togglePlaybackImage.src = 'pause.svg';
-    }
-    pause() {
-        this.audio.pause();
-        this.togglePlaybackImage.src = 'play.svg';
-    }
     playNewSong(song) {
         this.queue = [song];
         this.queuePointer = this.queue.length - 1;
@@ -93,6 +83,42 @@ export default class Player {
         if (this.queue.length === this.queuePointer + 1) {
             this.playSong();
         }
+    }
+    render() {
+        if (!this.isSeeking) {
+            this.songCurrentTime.textContent = this.durationToString(this.audio.currentTime);
+            if (this.audio.ended) {
+                this.seekBar.value = this.seekBar.max;
+            }
+            else {
+                this.seekBar.value = Math.floor(this.audio.currentTime).toString();
+            }
+            let passedTime = this.queue
+                .slice(0, this.queuePointer)
+                .reduce((duration, song) => duration + song.duration, 0);
+            if (!this.audio.ended) {
+                passedTime += this.audio.currentTime;
+            }
+            this.queueCurrentTime.textContent = this.durationToString(passedTime);
+            this.queueCurrentTime.dateTime = `PT${Math.floor(passedTime)}s`;
+            const remainingTime = Math.ceil(this.queueDuration - passedTime);
+            this.queueRemainingTime.textContent =
+                this.durationToString(remainingTime);
+            this.queueRemainingTime.dateTime = `PT${Math.floor(remainingTime)}S`;
+        }
+        requestAnimationFrame(() => {
+            this.render();
+        });
+    }
+    play() {
+        if (this.audio.src) {
+            this.audio.play().catch((e) => console.error(e));
+        }
+        this.togglePlaybackImage.src = 'pause.svg';
+    }
+    pause() {
+        this.audio.pause();
+        this.togglePlaybackImage.src = 'play.svg';
     }
     playSong() {
         var _a;
@@ -204,32 +230,6 @@ export default class Player {
         this.queueDuration = this.queue.reduce((duration, song) => duration + song.duration, 0);
         this.queueTotalTime.textContent = this.durationToString(this.queueDuration);
         this.queueTotalTime.dateTime = `PT${Math.floor(this.queueDuration)}s`;
-    }
-    render() {
-        if (!this.isSeeking) {
-            this.songCurrentTime.textContent = this.durationToString(this.audio.currentTime);
-            if (this.audio.ended) {
-                this.seekBar.value = this.seekBar.max;
-            }
-            else {
-                this.seekBar.value = Math.floor(this.audio.currentTime).toString();
-            }
-            let passedTime = this.queue
-                .slice(0, this.queuePointer)
-                .reduce((duration, song) => duration + song.duration, 0);
-            if (!this.audio.ended) {
-                passedTime += this.audio.currentTime;
-            }
-            this.queueCurrentTime.textContent = this.durationToString(passedTime);
-            this.queueCurrentTime.dateTime = `PT${Math.floor(passedTime)}s`;
-            const remainingTime = Math.ceil(this.queueDuration - passedTime);
-            this.queueRemainingTime.textContent =
-                this.durationToString(remainingTime);
-            this.queueRemainingTime.dateTime = `PT${Math.floor(remainingTime)}S`;
-        }
-        requestAnimationFrame(() => {
-            this.render();
-        });
     }
     moveSong(fromIndex, toIndex) {
         if (fromIndex === toIndex)
