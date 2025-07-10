@@ -58,16 +58,33 @@ export default class Player {
         });
         document.addEventListener('keydown', (e) => {
             console.log(e.key.toLowerCase());
+            // K to play/pause
+            // Arrow keys to seek
+            //
             switch (e.key.toLowerCase()) {
                 case ' ':
-                case 'k':
+                case ';':
                     e.preventDefault();
                     this.playButton.click();
                     break;
+                case 'k':
+                    e.preventDefault();
+                    this.previousButton.click();
+                    break;
+                case 'l':
+                    e.preventDefault();
+                    this.nextButton.click();
+                    break;
+                case 's':
+                    e.preventDefault();
+                    this.shuffleButton.click();
+                    break;
                 case 'arrowright':
+                    e.preventDefault();
                     this.audio.currentTime += 10;
                     break;
                 case 'arrowleft':
+                    e.preventDefault();
                     this.audio.currentTime -= 10;
                     break;
             }
