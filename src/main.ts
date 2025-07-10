@@ -105,6 +105,11 @@ function loadApp(songJSON: SongFolder) {
   selector.render();
 
   document.addEventListener('keydown', (e) => {
+    if (
+      e.target instanceof HTMLInputElement ||
+      e.target instanceof HTMLTextAreaElement
+    )
+      return;
     // Space or ; to play/pause
     // K to play previous song
     // J to play next song

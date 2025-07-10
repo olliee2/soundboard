@@ -45,6 +45,9 @@ function loadApp(songJSON) {
     const selector = new Selector(filterBar, changeModeButton, changeModeImage, changeDirectionButton, changeDirectionImage, songTree, player, songJSON);
     selector.render();
     document.addEventListener('keydown', (e) => {
+        if (e.target instanceof HTMLInputElement ||
+            e.target instanceof HTMLTextAreaElement)
+            return;
         // Space or ; to play/pause
         // K to play previous song
         // J to play next song
@@ -80,11 +83,13 @@ function loadApp(songJSON) {
             case '/':
                 e.preventDefault();
                 filterBar.focus();
+                break;
             case 'escape':
                 const activeElement = document.activeElement;
                 if (activeElement) {
                     activeElement.blur();
                 }
+                break;
         }
     });
 }
