@@ -131,11 +131,11 @@ function loadApp(songJSON: SongFolder) {
         break;
       case 'arrowright':
         e.preventDefault();
-        player.audio.currentTime += 10;
+        player.seekForwards(10);
         break;
       case 'arrowleft':
         e.preventDefault();
-        player.audio.currentTime -= 10;
+        player.seekForwards(-10);
         break;
     }
   });
