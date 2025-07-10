@@ -10,8 +10,12 @@
 <body>
 <main id="container">
     <dialog id="shortcuts-popup">
+        <button id="close-modal" onclick="// noinspection JSUnresolvedReference
+document.getElementById('shortcuts-popup').close()">X
+        </button>
         <ul>
-            <li></li>
+            <li>← Skip back 10 seconds</li>
+            <li>← Skip forwards 10 seconds</li>
         </ul>
     </dialog>
     <section id="song-selector">
@@ -51,6 +55,9 @@
             <span><time datetime="PT0S" id="queue-remaining-time">0:00</time> Remaining</span>
             <div id="queue-songs-container"></div>
         </div>
+        <button id="keyboard-shortcuts-button" onclick="// noinspection JSUnresolvedReference
+document.getElementById('shortcuts-popup').showModal()">?
+        </button>
     </aside>
 </main>
 <script src="main.js" type="module"></script>

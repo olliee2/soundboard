@@ -214,3 +214,12 @@ button:focus {
     outline: 2px solid var(--focus);
     background: var(--bg-item);
 }
+
+#keyboard-shortcuts-button {
+    height: 24px;
+    width: 24px;
+}
+
+#shortcuts-popup {
+    padding: 1rem;
+}
