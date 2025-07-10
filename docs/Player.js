@@ -1,10 +1,11 @@
 export default class Player {
-    constructor(songTitle, previousButton, playButton, togglePlaybackImage, nextButton, shuffleButton, songCurrentTime, seekBar, songTotalTime, queueContainer, queueCurrentTime, queueTotalTime, queueRemainingTime, queueSongsContainer) {
+    constructor(songTitle, previousButton, playButton, togglePlaybackImage, nextButton, muteButton, shuffleButton, songCurrentTime, seekBar, songTotalTime, queueContainer, queueCurrentTime, queueTotalTime, queueRemainingTime, queueSongsContainer) {
         this.songTitle = songTitle;
         this.previousButton = previousButton;
         this.playButton = playButton;
         this.togglePlaybackImage = togglePlaybackImage;
         this.nextButton = nextButton;
+        this.muteButton = muteButton;
         this.shuffleButton = shuffleButton;
         this.songCurrentTime = songCurrentTime;
         this.seekBar = seekBar;

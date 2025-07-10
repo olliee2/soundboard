@@ -36,6 +36,10 @@ function loadApp(songJSON: SongFolder) {
   const nextButton = document.getElementById(
     'next-button',
   )! as HTMLButtonElement;
+  const muteButton = document.getElementById(
+    'mute-button',
+  )! as HTMLButtonElement;
+  const muteImage = document.getElementById('mute-image')! as HTMLImageElement;
   const shuffleButton = document.getElementById(
     'shuffle-button',
   )! as HTMLButtonElement;
@@ -64,6 +68,7 @@ function loadApp(songJSON: SongFolder) {
     playButton,
     togglePlaybackImage,
     nextButton,
+    muteButton,
     shuffleButton,
     songCurrentTime,
     seekBar,

@@ -17,6 +17,7 @@ export default class Player {
     private playButton: HTMLButtonElement,
     private togglePlaybackImage: HTMLImageElement,
     private nextButton: HTMLButtonElement,
+    private muteButton: HTMLButtonElement,
     private shuffleButton: HTMLButtonElement,
     private songCurrentTime: HTMLTimeElement,
     private seekBar: HTMLInputElement,
@@ -46,6 +47,8 @@ export default class Player {
     this.nextButton.addEventListener('click', () => {
       this.nextSong();
     });
+
+    this.muteButton.
 
     this.shuffleButton.addEventListener('click', () => {
       for (let i = 0; i < this.queue.length; i++) {
