@@ -43,9 +43,11 @@ export default class Player {
         });
         this.muteButton.addEventListener('click', () => {
             if (this.audio.muted) {
+                this.audio.muted = false;
                 this.muteImage.src = 'unmuted.svg';
             }
             else {
+                this.audio.muted = true;
                 this.muteImage.src = 'muted.svg';
             }
         });
