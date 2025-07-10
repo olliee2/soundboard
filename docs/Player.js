@@ -57,10 +57,11 @@ export default class Player {
             this.isSeeking = false;
         });
         document.addEventListener('keydown', (e) => {
-            console.log(e.key.toLowerCase());
-            // K to play/pause
-            // Arrow keys to seek
+            // Space or ; to play/pause
+            // K to play previous song
+            // J to play next song
             //
+            // Arrow keys to seek
             switch (e.key.toLowerCase()) {
                 case ' ':
                 case ';':
