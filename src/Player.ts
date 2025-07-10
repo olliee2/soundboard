@@ -86,14 +86,14 @@ export default class Player {
     }
   }
 
-  play() {
+  private play() {
     if (this.audio.src) {
       this.audio.play().catch((e) => console.error(e));
     }
     this.togglePlaybackImage.src = 'pause.svg';
   }
 
-  pause() {
+  private pause() {
     this.audio.pause();
     this.togglePlaybackImage.src = 'play.svg';
   }
@@ -113,7 +113,7 @@ export default class Player {
     }
   }
 
-  playSong() {
+  private playSong() {
     const song = this.queue[this.queuePointer];
     this.audio.src = song.url;
     this.play();
@@ -129,7 +129,7 @@ export default class Player {
     }
   }
 
-  previousSong() {
+  private previousSong() {
     if (this.queuePointer > 0) {
       this.queuePointer--;
       this.renderQueue();
@@ -137,7 +137,7 @@ export default class Player {
     this.playSong();
   }
 
-  nextSong() {
+  private nextSong() {
     if (this.queuePointer + 1 < this.queue.length) {
       this.queuePointer++;
       this.renderQueue();
@@ -147,7 +147,7 @@ export default class Player {
     }
   }
 
-  handleSongEnd() {
+  private handleSongEnd() {
     this.togglePlaybackImage.src = 'play.svg';
     this.queuePointer++;
     this.renderQueue();
@@ -158,13 +158,13 @@ export default class Player {
     }
   }
 
-  durationToString(duration: number) {
+  private durationToString(duration: number) {
     const minutes = Math.floor(duration / 60);
     const seconds = Math.floor(duration % 60);
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   }
 
-  renderQueue() {
+  private renderQueue() {
     const frag = document.createDocumentFragment();
     this.queue.forEach((song, index) => {
       const div = document.createElement('div');
