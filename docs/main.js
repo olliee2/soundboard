@@ -44,4 +44,39 @@ function loadApp(songJSON) {
     const songTree = document.getElementById('song-tree');
     const selector = new Selector(filterBar, changeModeButton, changeModeImage, changeDirectionButton, changeDirectionImage, songTree, player, songJSON);
     selector.render();
+    document.addEventListener('keydown', (e) => {
+        // Space or ; to play/pause
+        // K to play previous song
+        // J to play next song
+        // / to highlight searchbar
+        // Arrow keys to seek
+        console.log(e.key.toLowerCase());
+        switch (e.key.toLowerCase()) {
+            case ' ':
+            case ';':
+                e.preventDefault();
+                playButton.click();
+                break;
+            case 'k':
+                e.preventDefault();
+                previousButton.click();
+                break;
+            case 'l':
+                e.preventDefault();
+                nextButton.click();
+                break;
+            case 's':
+                e.preventDefault();
+                shuffleButton.click();
+                break;
+            case 'arrowright':
+                e.preventDefault();
+                player.audio.currentTime += 10;
+                break;
+            case 'arrowleft':
+                e.preventDefault();
+                player.audio.currentTime -= 10;
+                break;
+        }
+    });
 }

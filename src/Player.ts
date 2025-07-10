@@ -68,7 +68,6 @@ export default class Player {
       this.audio.currentTime = Number(this.seekBar.value);
       this.isSeeking = false;
     });
-
   }
 
   addSelector(selector: Selector) {
@@ -252,7 +251,7 @@ export default class Player {
       }
       this.queueCurrentTime.textContent = this.durationToString(passedTime);
       this.queueCurrentTime.dateTime = `PT${Math.floor(passedTime)}s`;
-      const remainingTime = this.queueDuration - passedTime;
+      const remainingTime = Math.ceil(this.queueDuration - passedTime);
       this.queueRemainingTime.textContent =
         this.durationToString(remainingTime);
       this.queueRemainingTime.dateTime = `PT${Math.floor(remainingTime)}S`;

@@ -56,40 +56,6 @@ export default class Player {
             this.audio.currentTime = Number(this.seekBar.value);
             this.isSeeking = false;
         });
-        document.addEventListener('keydown', (e) => {
-            // Space or ; to play/pause
-            // K to play previous song
-            // J to play next song
-            //
-            // Arrow keys to seek
-            switch (e.key.toLowerCase()) {
-                case ' ':
-                case ';':
-                    e.preventDefault();
-                    this.playButton.click();
-                    break;
-                case 'k':
-                    e.preventDefault();
-                    this.previousButton.click();
-                    break;
-                case 'l':
-                    e.preventDefault();
-                    this.nextButton.click();
-                    break;
-                case 's':
-                    e.preventDefault();
-                    this.shuffleButton.click();
-                    break;
-                case 'arrowright':
-                    e.preventDefault();
-                    this.audio.currentTime += 10;
-                    break;
-                case 'arrowleft':
-                    e.preventDefault();
-                    this.audio.currentTime -= 10;
-                    break;
-            }
-        });
     }
     addSelector(selector) {
         this.selector = selector;
@@ -253,7 +219,7 @@ export default class Player {
             }
             this.queueCurrentTime.textContent = this.durationToString(passedTime);
             this.queueCurrentTime.dateTime = `PT${Math.floor(passedTime)}s`;
-            const remainingTime = this.queueDuration - passedTime;
+            const remainingTime = Math.ceil(this.queueDuration - passedTime);
             this.queueRemainingTime.textContent =
                 this.durationToString(remainingTime);
             this.queueRemainingTime.dateTime = `PT${Math.floor(remainingTime)}S`;

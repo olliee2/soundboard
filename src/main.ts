@@ -103,40 +103,39 @@ function loadApp(songJSON: SongFolder) {
     songJSON,
   );
   selector.render();
-}
 
-function addKeyboardShortcuts() {
   document.addEventListener('keydown', (e) => {
     // Space or ; to play/pause
     // K to play previous song
     // J to play next song
     // / to highlight searchbar
     // Arrow keys to seek
+    console.log(e.key.toLowerCase());
     switch (e.key.toLowerCase()) {
       case ' ':
       case ';':
         e.preventDefault();
-        this.playButton.click();
+        playButton.click();
         break;
       case 'k':
         e.preventDefault();
-        this.previousButton.click();
+        previousButton.click();
         break;
       case 'l':
         e.preventDefault();
-        this.nextButton.click();
+        nextButton.click();
         break;
       case 's':
         e.preventDefault();
-        this.shuffleButton.click();
+        shuffleButton.click();
         break;
       case 'arrowright':
         e.preventDefault();
-        this.audio.currentTime += 10;
+        player.audio.currentTime += 10;
         break;
       case 'arrowleft':
         e.preventDefault();
-        this.audio.currentTime -= 10;
+        player.audio.currentTime -= 10;
         break;
     }
   });
