@@ -56,6 +56,22 @@ export default class Player {
             this.audio.currentTime = Number(this.seekBar.value);
             this.isSeeking = false;
         });
+        document.addEventListener('keydown', (e) => {
+            console.log(e.key.toLowerCase());
+            switch (e.key.toLowerCase()) {
+                case ' ':
+                case 'k':
+                    e.preventDefault();
+                    this.playButton.click();
+                    break;
+                case 'arrowright':
+                    this.audio.currentTime += 10;
+                    break;
+                case 'arrowleft':
+                    this.audio.currentTime -= 10;
+                    break;
+            }
+        });
     }
     addSelector(selector) {
         this.selector = selector;
@@ -69,7 +85,9 @@ export default class Player {
         }
     }
     play() {
-        this.audio.play().catch((e) => console.error(e));
+        if (this.audio.src) {
+            this.audio.play().catch((e) => console.error(e));
+        }
         this.togglePlaybackImage.src = 'pause.svg';
     }
     pause() {
