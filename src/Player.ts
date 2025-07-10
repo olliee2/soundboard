@@ -18,6 +18,7 @@ export default class Player {
     private togglePlaybackImage: HTMLImageElement,
     private nextButton: HTMLButtonElement,
     private muteButton: HTMLButtonElement,
+    private muteImage: HTMLImageElement,
     private shuffleButton: HTMLButtonElement,
     private songCurrentTime: HTMLTimeElement,
     private seekBar: HTMLInputElement,
@@ -48,7 +49,15 @@ export default class Player {
       this.nextSong();
     });
 
-    this.muteButton.
+    this.muteButton.addEventListener('click', () => {
+      if (this.audio.muted) {
+        this.audio.muted = false;
+        this.muteImage.src = 'unmuted.svg';
+      } else {
+        this.audio.muted = true;
+        this.muteImage.src = 'muted.svg';
+      }
+    });
 
     this.shuffleButton.addEventListener('click', () => {
       for (let i = 0; i < this.queue.length; i++) {

@@ -69,6 +69,7 @@ function loadApp(songJSON: SongFolder) {
     togglePlaybackImage,
     nextButton,
     muteButton,
+    muteImage,
     shuffleButton,
     songCurrentTime,
     seekBar,

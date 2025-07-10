@@ -26,6 +26,7 @@ function loadApp(songJSON) {
     const togglePlaybackImage = document.getElementById('toggle-playback');
     const nextButton = document.getElementById('next-button');
     const muteButton = document.getElementById('mute-button');
+    const muteImage = document.getElementById('mute-image');
     const shuffleButton = document.getElementById('shuffle-button');
     const songCurrentTime = document.getElementById('song-current-time');
     const seekBar = document.getElementById('seek-bar');
@@ -35,7 +36,7 @@ function loadApp(songJSON) {
     const queueTotalTime = document.getElementById('queue-total-time');
     const queueRemainingTime = document.getElementById('queue-remaining-time');
     const queueSongsContainer = document.getElementById('queue-songs-container');
-    const player = new Player(songTitle, previousButton, playButton, togglePlaybackImage, nextButton, muteButton, shuffleButton, songCurrentTime, seekBar, songTotalTime, queueContainer, queueCurrentTime, queueTotalTime, queueRemainingTime, queueSongsContainer);
+    const player = new Player(songTitle, previousButton, playButton, togglePlaybackImage, nextButton, muteButton, muteImage, shuffleButton, songCurrentTime, seekBar, songTotalTime, queueContainer, queueCurrentTime, queueTotalTime, queueRemainingTime, queueSongsContainer);
     player.render();
     const filterBar = document.getElementById('filter-bar');
     const changeModeButton = document.getElementById('change-mode-button');
