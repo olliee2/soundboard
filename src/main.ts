@@ -141,7 +141,10 @@ function loadApp(songJSON: SongFolder) {
         e.preventDefault();
         filterBar.focus();
       case 'escape':
-        document.activeElement.blur();
+        const activeElement = document.activeElement as HTMLElement | null;
+        if (activeElement) {
+          activeElement.blur();
+        }
     }
   });
 }

@@ -81,7 +81,10 @@ function loadApp(songJSON) {
                 e.preventDefault();
                 filterBar.focus();
             case 'escape':
-                document.activeElement.blur();
+                const activeElement = document.activeElement;
+                if (activeElement) {
+                    activeElement.blur();
+                }
         }
     });
 }
