@@ -137,6 +137,11 @@ function loadApp(songJSON: SongFolder) {
         e.preventDefault();
         player.seekForwards(-10);
         break;
+      case '/':
+        e.preventDefault();
+        filterBar.focus();
+      case 'escape':
+        document.activeElement.blur();
     }
   });
 }

@@ -60,6 +60,9 @@ export default class Player {
     addSelector(selector) {
         this.selector = selector;
     }
+    seekForwards(time) {
+        this.audio.currentTime += time;
+    }
     getCurrentSong() {
         if (this.queuePointer < this.queue.length) {
             return this.queue[this.queuePointer];
