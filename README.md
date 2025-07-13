@@ -7,9 +7,13 @@ An online soundboard for playing .mp3, .ogg, .wav, and .flac files in the browse
 ## Features
 
 1. Nested music folders
-2. Automatic sorting by song duration
-3. Song queue creation, ordering, and playing
-4.
+2. Automatic sorting by song duration or name
+3. Song queue creation, reordering, and playback
+4. Play, pause, previous, next, mute, and shuffle controls
+5. Seek bar for current song, and time display for the queue
+6. Keyboard shortcut integration
+7. Search bar for quickly finding specific songs
+8. Song preloading for reducing stutters between tracks
 
 ## Usage & Hosting
 
