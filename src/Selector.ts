@@ -59,7 +59,11 @@ export default class Selector {
     return songs;
   }
 
-  renderSongs(songs: SongFile[], currentSongURL: string | null) {
+  renderSongs(
+    songs: SongFile[],
+    currentSongURL: string | null,
+    renderTimeSeparators: boolean,
+  ) {
     const frag = document.createDocumentFragment();
     let previousDurationInMinutes: number | null = null;
     if (this.sortMode === 'duration') {
@@ -71,7 +75,10 @@ export default class Selector {
     for (const song of songs) {
       if (this.sortMode === 'duration') {
         const durationInMinutes = Math.floor(song.duration / 60);
-        if (durationInMinutes !== previousDurationInMinutes) {
+        if (
+          durationInMinutes !== previousDurationInMinutes &&
+          renderTimeSeparators
+        ) {
           previousDurationInMinutes = durationInMinutes;
           const b = document.createElement('b');
           b.className = 'time-separator';
@@ -166,7 +173,12 @@ export default class Selector {
     currentSongURL: string | null,
   ) {
     const ul = document.createElement('ul');
-    const songsFragment = this.renderSongs(songFolder.files, currentSongURL);
+    const renderSongSeparators = index !== 0;
+    const songsFragment = this.renderSongs(
+      songFolder.files,
+      currentSongURL,
+      renderSongSeparators,
+    );
     const folders = songFolder.folders;
     const foldersFragment = this.renderFolders(folders, index, currentSongURL);
     if (index === 0) {
@@ -190,7 +202,7 @@ export default class Selector {
           .includes(this.filterBar.value?.toLowerCase() ?? '');
       });
       const ul = document.createElement('ul');
-      ul.append(this.renderSongs(filteredSongs, currentSongURL));
+      ul.append(this.renderSongs(filteredSongs, currentSongURL, true));
       this.songTree.replaceChildren(ul);
     }
   }
